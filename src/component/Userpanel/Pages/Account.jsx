@@ -110,8 +110,8 @@ const Account = () => {
         {/* Avatar and Basic Info */}
         <div className="flex items-center gap-6 mb-8 pb-8 border-b border-gray-700">
           <div className="relative">
-            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <span className="text-3xl font-bold text-white">
+            <div className="w-24 h-24 truncate bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <span className="text-3xl truncate font-bold text-white">
                 {userInfo.firstName[0]}
                 {userInfo.lastName[0]}
               </span>
@@ -126,7 +126,7 @@ const Account = () => {
             <h2 className="text-2xl font-bold text-white">
               {userInfo.firstName} {userInfo.lastName}
             </h2>
-            <p className="text-gray-400">{userInfo.email}</p>
+            <p className="text-gray-400 truncate max-sm:w-[40%] ">{userInfo.email}</p>
           </div>
         </div>
 
@@ -181,10 +181,10 @@ const Account = () => {
                 name="email"
                 value={editedInfo.email}
                 onChange={handleInputChange}
-                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
+                className="w-full bg-gray-700/50 border border-gray-600 truncate rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
               />
             ) : (
-              <div className="bg-gray-700/30 rounded-lg px-4 py-3 text-white">
+              <div className="bg-gray-700/30 rounded-lg px-4 py-3 text-white truncate">
                 {userInfo.email}
               </div>
             )}

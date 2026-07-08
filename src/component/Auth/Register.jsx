@@ -171,7 +171,7 @@ function Register() {
                         type="text"
                         name="username"
                         placeholder="Username"
-                        className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-gray-800/60 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all outline-none text-sm"
+                        className="w-full pl-9 pr-3 py-2.5 max-sm:text-[10px] rounded-xl bg-gray-800/60 border border-gray-700 text-white placeholder-gray-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all outline-none text-sm"
                       />
                       <ErrorMessage
                         name="username"
