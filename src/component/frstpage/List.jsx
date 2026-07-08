@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAllMovies } from "../core/api/courseApi";
-import { Audio } from "react-spinners";
+import { RingLoader  } from "react-spinners";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Newset from "./Newset";
@@ -64,7 +64,7 @@ const List = () => {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Audio
+        <RingLoader 
           height="180"
           width="80"
           radius="9"

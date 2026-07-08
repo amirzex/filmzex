@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllCourses } from "../core/api/courseApi";
 import { Box2 } from "../card/Box2";
-import { Audio } from "react-spinners";
+import { RingLoader  } from "react-spinners";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FaArrowLeft, 
@@ -89,7 +89,7 @@ function Showall() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <Audio
+        <RingLoader 
           height="180"
           width="80"
           radius="9"
