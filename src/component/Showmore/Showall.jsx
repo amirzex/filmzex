@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllCourses } from "../core/api/courseApi";
 import { Box2 } from "../card/Box2";
-import { Audio } from "react-loader-spinner";
+import { Audio } from "react-spinners";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FaArrowLeft, 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getAllMovies } from "../core/api/courseApi";
-import { Audio } from "react-loader-spinner";
+import { Audio } from "react-spinners";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Newset from "./Newset";
