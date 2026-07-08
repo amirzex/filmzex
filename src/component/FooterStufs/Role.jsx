@@ -2,7 +2,7 @@ import React from "react";
 
 const Role = () => {
   return (
-    <div className=" w-[1920px] flex flex-col ">
+    <div className=" flex flex-col ">
       <div className="flex flex-row justify-center">
         <div className="border-t-3 border-red-400 w-4/10"></div>
         <div className="flex flex-row text-center justify-center text-3xl font-sans w-1/10 relative">
