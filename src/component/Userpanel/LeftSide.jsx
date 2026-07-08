@@ -1,12 +1,14 @@
-import dashboard from "../../assets/panel/icons8-dashboard-50.png";
-import account from "../../assets/panel/icons8-account-50.png";
-import Favorite from "../../assets/panel/icons8-Favorite-50.png";
-import buy from "../../assets/panel/icons8-basket-50.png";
-import setting from "../../assets/panel/icons8-settings-50.png";
-import security from "../../assets/panel/icons8-cyber-security-50.png";
-import {Backpack} from "lucide-react"
+import {
+  LayoutDashboard,
+  User,
+  Heart,
+  ShoppingBag,
+  Settings,
+  Shield,
+  Home,
+  LogOut,
+} from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FiLogOut } from "react-icons/fi";
 import { useState, useEffect } from "react";
 
 const LeftSide = () => {
@@ -24,19 +26,18 @@ const LeftSide = () => {
     {
       id: 1,
       title: "Dashboard",
-      photo: dashboard,
+      icon: LayoutDashboard,
       path: "/userpanel/Dashboard",
     },
-    { id: 2, title: "Account", photo: account, path: "/userpanel/account" },
-    { id: 3, title: "Favorite", photo: Favorite, path: "/userpanel/favorite" },
-    { id: 4, title: "Buy", photo: buy, path: "/userpanel/buy" },
-    { id: 5, title: "Setting", photo: setting, path: "/userpanel/setting" },
-    { id: 6, title: "Security", photo: security, path: "/userpanel/security" },
-    { id: 6, title: "home", photo: Backpack, path: "/" },
+    { id: 2, title: "Account", icon: User, path: "/userpanel/account" },
+    { id: 3, title: "Favorite", icon: Heart, path: "/userpanel/favorite" },
+    { id: 4, title: "Buy", icon: ShoppingBag, path: "/userpanel/buy" },
+    { id: 5, title: "Setting", icon: Settings, path: "/userpanel/setting" },
+    { id: 6, title: "Security", icon: Shield, path: "/userpanel/security" },
+    { id: 7, title: "Home", icon: Home, path: "/" },
   ];
 
   const handleLogout = () => {
-    // Clear all user data
     const keys = [
       "user",
       "isAuthenticated",
@@ -72,22 +73,25 @@ const LeftSide = () => {
 
       {/* Menu */}
       <div className="flex-1">
-        {menuItems?.map((item) => (
-          <NavLink
-            key={item.id}
-            to={item.path}
-            className={({ isActive }) =>
-              `flex items-center gap-3 p-3 rounded-xl mb-1 transition-all duration-300 ${
-                isActive
-                  ? "bg-red-500/20 text-red-400"
-                  : "text-gray-300 hover:bg-gray-700/50 hover:text-white"
-              }`
-            }
-          >
-            <img className="w-5 h-5" src={item.photo} alt={item.title} />
-            <span className="text-sm">{item.title}</span>
-          </NavLink>
-        ))}
+        {menuItems?.map((item) => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.id}
+              to={item.path}
+              className={({ isActive }) =>
+                `flex items-center gap-3 p-3 rounded-xl mb-1 transition-all duration-300 ${
+                  isActive
+                    ? "bg-red-500/20 text-red-400"
+                    : "text-gray-300 hover:bg-gray-700/50 hover:text-white"
+                }`
+              }
+            >
+              <Icon className="w-5 h-5" />
+              <span className="text-sm">{item.title}</span>
+            </NavLink>
+          );
+        })}
       </div>
 
       {/* Logout */}
@@ -95,7 +99,7 @@ const LeftSide = () => {
         onClick={handleLogout}
         className="flex items-center gap-3 px-4 py-3 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-all duration-300 border border-red-500/20"
       >
-        <FiLogOut className="w-5 h-5" />
+        <LogOut className="w-5 h-5" />
         <span>Logout</span>
       </button>
     </div>
