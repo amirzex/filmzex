@@ -16,8 +16,7 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 import { FiAlertCircle } from "react-icons/fi";
-import { registerUser as registerUserAPI } from "../core/api/authApi";
-import { saveToken, getToken, hasToken } from "../core/token/token";
+import { saveToken, hasToken } from "../core/token/token";
 import batman from "../../assets/register/batman.jpg";
 
 function Register() {
@@ -53,41 +52,39 @@ function Register() {
   const saveUserData = (userData) => {
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("isAuthenticated", "true");
-    // You can also save individual fields if needed
+    // Individual fields for quick access
     localStorage.setItem("username", userData.username);
     localStorage.setItem("userEmail", userData.email);
   };
 
-  const registerUserHandler = async (payload) => {
+  const registerUserHandler = (payload) => {
     setLoading(true);
     try {
-      const response = await registerUserAPI(payload);
-
-      // Save token
-      saveToken(response.token);
-
-      // Save user data to localStorage
-      saveUserData({
-        id: response.id,
-        username: response.username,
-        email: response.email,
-        phone: response.phone,
-        gender: response.gender,
-        birthDate: response.birthDate,
-        token: response.token,
+      const user = {
+        id: generateToken(),
+        username: payload.username,
+        email: payload.email,
+        phone: payload.phone,
+        gender: payload.gender,
+        birthDate: payload.birthDate,
+        token: payload.token,
         registeredAt: new Date().toISOString(),
-      });
+      };
+
+      // Save token + user info to localStorage
+      saveToken(user.token);
+      saveUserData(user);
 
       if (hasToken()) {
         console.log("User is authenticated");
       }
 
       setStatusMessage("✅ Registration successful!");
-      setNewUser(response);
+      setNewUser(user);
 
-      // Redirect to home after successful registration
+      // Redirect to the user panel after successful registration
       setTimeout(() => {
-        navigate("/");
+        navigate("/userpanel/dashboard");
       }, 1500);
     } catch (error) {
       setStatusMessage("❌ Registration failed. Please try again.");
@@ -157,7 +154,7 @@ function Register() {
               }}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 const payload = createRegisterPayload(values);
-                registerUser(payload);
+                registerUserHandler(payload);
                 setSubmitting(false);
                 resetForm();
               }}

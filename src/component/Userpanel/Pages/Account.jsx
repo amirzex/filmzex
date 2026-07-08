@@ -1,18 +1,39 @@
 import { useState } from "react";
 import { FiEdit, FiSave, FiX } from "react-icons/fi";
 
+const buildUserInfo = () => {
+  const defaults = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    birthDate: "",
+    nationalCode: "",
+    address: "",
+    bio: "",
+  };
+
+  try {
+    const stored = JSON.parse(localStorage.getItem("user"));
+    if (!stored) return defaults;
+
+    const [firstName = "", ...rest] = (stored.username || "").split(" ");
+    return {
+      ...defaults,
+      firstName,
+      lastName: rest.join(" "),
+      email: stored.email || "",
+      phone: stored.phone || "",
+      birthDate: stored.birthDate || "",
+    };
+  } catch {
+    return defaults;
+  }
+};
+
 const Account = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    firstName: "Alireza",
-    lastName: "Mohammadi",
-    email: "alireza.mohammadi@email.com",
-    phone: "09123456789",
-    birthDate: "1991/08/06",
-    nationalCode: "1234567890",
-    address: "Tehran, Valiasr Street, Golestan Alley, Plaque 12",
-    bio: "Front-end developer with 5 years of experience",
-  });
+  const [userInfo, setUserInfo] = useState(buildUserInfo);
 
   const [editedInfo, setEditedInfo] = useState({ ...userInfo });
 
@@ -27,6 +48,23 @@ const Account = () => {
   const handleSave = () => {
     setUserInfo(editedInfo);
     setIsEditing(false);
+
+    // Persist the edited info back to localStorage
+    try {
+      const stored = JSON.parse(localStorage.getItem("user")) || {};
+      const updated = {
+        ...stored,
+        username: `${editedInfo.firstName} ${editedInfo.lastName}`.trim(),
+        email: editedInfo.email,
+        phone: editedInfo.phone,
+        birthDate: editedInfo.birthDate,
+      };
+      localStorage.setItem("user", JSON.stringify(updated));
+      localStorage.setItem("username", updated.username);
+      localStorage.setItem("userEmail", updated.email);
+    } catch {
+      // ignore storage errors
+    }
   };
 
   const handleCancel = () => {
