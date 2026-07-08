@@ -104,7 +104,7 @@ const Buy = () => {
   };
 
   return (
-    <div className="w-full p-5 bg-gray-800/40 backdrop-blur-md">
+    <div className="w-full p-3 sm:p-5 bg-gray-800/40 backdrop-blur-md">
       {/* Header */}
       <div className="flex flex-wrap justify-between items-center gap-3 mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-white">Shopping & Purchases</h1>
@@ -115,10 +115,10 @@ const Buy = () => {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-4 mb-6 border-b border-gray-700">
+      <div className="flex gap-2 sm:gap-4 mb-6 border-b border-gray-700">
         <button
           onClick={() => setActiveTab("cart")}
-          className={`px-6 py-3 text-lg font-medium transition-all duration-300 relative ${
+          className={`px-3 sm:px-6 py-3 text-base sm:text-lg font-medium transition-all duration-300 relative ${
             activeTab === "cart"
               ? "text-blue-400"
               : "text-gray-400 hover:text-gray-300"
@@ -131,7 +131,7 @@ const Buy = () => {
         </button>
         <button
           onClick={() => setActiveTab("history")}
-          className={`px-6 py-3 text-lg font-medium transition-all duration-300 relative ${
+          className={`px-3 sm:px-6 py-3 text-base sm:text-lg font-medium transition-all duration-300 relative ${
             activeTab === "history"
               ? "text-blue-400"
               : "text-gray-400 hover:text-gray-300"
@@ -149,7 +149,7 @@ const Buy = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Cart Items - Left Side */}
           <div className="lg:col-span-2">
-            <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6">
+            <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4 sm:p-6">
               <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700">
                 Cart Items ({cartItems.length})
               </h2>
@@ -159,59 +159,77 @@ const Buy = () => {
                   {cartItems.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center gap-4 p-4 bg-gray-700/30 rounded-lg hover:bg-gray-700/40 transition-all"
+                      className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-700/30 rounded-lg hover:bg-gray-700/40 transition-all"
                     >
-                      {/* Image/Icon */}
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-3xl">
-                        {item.image}
-                      </div>
+                      {/* Top row: Image + Details + (mobile) Remove */}
+                      <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                        {/* Image/Icon */}
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-2xl sm:text-3xl">
+                          {item.image}
+                        </div>
 
-                      {/* Item Details */}
-                      <div className="flex-1">
-                        <h3 className="text-white font-semibold">
-                          {item.title}
-                        </h3>
-                        <p className="text-sm text-gray-400">{item.category}</p>
-                        <p className="text-sm text-gray-400">
-                          Added: {item.date}
-                        </p>
-                      </div>
+                        {/* Item Details */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-white font-semibold truncate">
+                            {item.title}
+                          </h3>
+                          <p className="text-sm text-gray-400 truncate">
+                            {item.category}
+                          </p>
+                          <p className="text-xs sm:text-sm text-gray-400">
+                            Added: {item.date}
+                          </p>
+                        </div>
 
-                      {/* Price */}
-                      <div className="text-white font-bold">
-                        ${(item.price * item.quantity).toFixed(2)}
-                      </div>
-
-                      {/* Quantity Controls */}
-                      <div className="flex items-center gap-2">
+                        {/* Remove Button (mobile only) */}
                         <button
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity - 1)
-                          }
-                          className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-white hover:bg-gray-600 transition-all"
+                          onClick={() => removeItem(item.id)}
+                          className="sm:hidden shrink-0 text-gray-400 hover:text-red-500 transition-all"
+                          aria-label="Remove item"
                         >
-                          <FiMinus size={14} />
-                        </button>
-                        <span className="text-white w-8 text-center">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity + 1)
-                          }
-                          className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center text-white hover:bg-gray-600 transition-all"
-                        >
-                          <FiPlus size={14} />
+                          <FiTrash2 size={18} />
                         </button>
                       </div>
 
-                      {/* Remove Button */}
-                      <button
-                        onClick={() => removeItem(item.id)}
-                        className="text-gray-400 hover:text-red-500 transition-all"
-                      >
-                        <FiTrash2 size={18} />
-                      </button>
+                      {/* Bottom row: Price + Quantity + (desktop) Remove */}
+                      <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4">
+                        {/* Price */}
+                        <div className="text-white font-bold whitespace-nowrap">
+                          ${(item.price * item.quantity).toFixed(2)}
+                        </div>
+
+                        {/* Quantity Controls */}
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                            }
+                            className="w-8 h-8 shrink-0 bg-gray-700 rounded-lg flex items-center justify-center text-white hover:bg-gray-600 transition-all"
+                          >
+                            <FiMinus size={14} />
+                          </button>
+                          <span className="text-white w-8 text-center">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
+                            className="w-8 h-8 shrink-0 bg-gray-700 rounded-lg flex items-center justify-center text-white hover:bg-gray-600 transition-all"
+                          >
+                            <FiPlus size={14} />
+                          </button>
+                        </div>
+
+                        {/* Remove Button (desktop only) */}
+                        <button
+                          onClick={() => removeItem(item.id)}
+                          className="hidden sm:block shrink-0 text-gray-400 hover:text-red-500 transition-all"
+                          aria-label="Remove item"
+                        >
+                          <FiTrash2 size={18} />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -229,7 +247,7 @@ const Buy = () => {
 
           {/* Order Summary - Right Side */}
           <div className="lg:col-span-1">
-            <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6 sticky top-5">
+            <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4 sm:p-6 lg:sticky lg:top-5">
               <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700">
                 Order Summary
               </h2>
@@ -282,7 +300,7 @@ const Buy = () => {
         </div>
       ) : (
         /* Purchase History View */
-        <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6">
+        <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4 sm:p-6">
           <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700">
             Purchase History
           </h2>
