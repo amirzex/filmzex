@@ -305,7 +305,8 @@ const Buy = () => {
             Purchase History
           </h2>
 
-          <div className="overflow-x-auto">
+          {/* Desktop: Table */}
+          <div className="hidden lg:block overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-700/50">
                 <tr>
@@ -380,8 +381,59 @@ const Buy = () => {
             </table>
           </div>
 
+          {/* Mobile / Tablet: Card list */}
+          <div className="lg:hidden space-y-3">
+            {purchaseHistory.map((purchase) => (
+              <div
+                key={purchase.id}
+                className="bg-gray-700/30 rounded-lg p-3 sm:p-4 hover:bg-gray-700/40 transition-all"
+              >
+                <div className="flex items-start gap-3">
+                  {/* Icon */}
+                  <div className="w-12 h-12 shrink-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-xl">
+                    {purchase.image}
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="text-white font-medium truncate">
+                        {purchase.title}
+                      </h3>
+                      <span
+                        className={`shrink-0 px-2.5 py-0.5 rounded-full text-xs ${
+                          purchase.status === "Delivered"
+                            ? "bg-green-600/30 text-green-300"
+                            : purchase.status === "Active"
+                              ? "bg-blue-600/30 text-blue-300"
+                              : "bg-gray-600/30 text-gray-300"
+                        }`}
+                      >
+                        {purchase.status}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-1 text-gray-400 text-sm mt-1">
+                      <FiClock size={13} />
+                      <span>{purchase.date}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-2 mt-2">
+                      <span className="text-white font-bold">
+                        ${purchase.price}
+                      </span>
+                      <button className="text-blue-400 hover:text-blue-300 text-sm transition-all">
+                        View Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
             <div className="bg-gray-700/30 rounded-lg p-4">
               <p className="text-gray-400 text-sm">Total Spent</p>
               <p className="text-2xl font-bold text-white">$249.97</p>
