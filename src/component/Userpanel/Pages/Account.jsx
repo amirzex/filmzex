@@ -73,7 +73,7 @@ const Account = () => {
   };
 
   return (
-    <div className="w-full p-5  bg-gray-800/40 backdrop-blur-md">
+    <div className="w-full max-w-full overflow-x-hidden p-3 sm:p-5  bg-gray-800/40 backdrop-blur-md">
       {/* Page Header */}
       <div className="flex flex-wrap justify-between items-center gap-3 mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-white">Personal Information</h1>
@@ -106,12 +106,12 @@ const Account = () => {
       </div>
 
       {/* Main Content */}
-      <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-8">
+      <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4 sm:p-8">
         {/* Avatar and Basic Info */}
-        <div className="flex items-center gap-6 mb-8 pb-8 border-b border-gray-700">
-          <div className="relative">
-            <div className="w-24 h-24 truncate bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <span className="text-3xl truncate font-bold text-white">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 sm:gap-6 mb-8 pb-8 border-b border-gray-700">
+          <div className="relative shrink-0">
+            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <span className="text-3xl font-bold text-white">
                 {userInfo.firstName[0]}
                 {userInfo.lastName[0]}
               </span>
@@ -122,11 +122,11 @@ const Account = () => {
               </button>
             )}
           </div>
-          <div>
-            <h2 className="text-2xl font-bold text-white">
+          <div className="min-w-0 w-full">
+            <h2 className="text-2xl font-bold text-white break-words">
               {userInfo.firstName} {userInfo.lastName}
             </h2>
-            <p className="text-gray-400 truncate max-sm:w-[40%] ">{userInfo.email}</p>
+            <p className="text-gray-400 truncate">{userInfo.email}</p>
           </div>
         </div>
 

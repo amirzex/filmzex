@@ -12,6 +12,22 @@
   font-family: "IRANSans", sans-serif; /* Set your default font here */
 }
 
+/* 2. Prevent horizontal overflow from widening the (mobile) viewport.
+   overflow-x:hidden on body alone is not enough on mobile, so guard
+   html and #root too, otherwise a too-wide element shifts the whole
+   layout to the left and the shift persists across SPA navigation. */
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 
 /* 3. Optimized Background Handling */
 body {
@@ -24,6 +40,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+  max-width: 100%;
   /* Allows for high-res smooth scrolling */
   scroll-behavior: smooth;
   background-color: var(--bg-primary);
