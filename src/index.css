@@ -1,0 +1,73 @@
+@import "tailwindcss";
+@import url("/src/assets/common/font/font.css");
+
+/* 1. CSS Reset & Base Foundation */
+:root {
+  /* Use HSL or HEX for consistent color management */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-main: #f8fafc;
+  --accent-red: #e11d48;
+
+  font-family: "IRANSans", sans-serif; /* Set your default font here */
+}
+
+
+/* 3. Optimized Background Handling */
+body {
+  /* Using a subtle overlay on your background image prevents it from clashing with text */
+  background-image: url("../src/assets/landing/ad.jpg");
+  background-attachment: fixed; /* Keeps background stable during scroll */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  /* Allows for high-res smooth scrolling */
+  scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  /* Avoid the 1920px restriction on :root. Use a wrapper in React instead. */
+  overflow-x: hidden;
+}
+
+/* 4. Modern Scrollbar (Hidden but Functional) */
+/* This is better than your version as it targets the root scrollbar properly */
+@layer base {
+  body::-webkit-scrollbar {
+    display: none; /* Hides scrollbar in Chrome/Safari */
+  }
+  body {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+/* Use the ! modifier prefix instead of the !important utility */
+.slick-dots {
+  @apply !bottom-6;
+}
+
+.white-dots li button:before {
+  @apply !text-[rgba(255,255,255,0.5)] !text-[12px];
+  transition: color 0.3s ease;
+}
+
+.white-dots li.slick-active button:before {
+  @apply !text-white;
+}
+
+/* 6. High-Resolution Smoothness */
+@media (min-width: 2560px) {
+  /* Adjust font scales or container widths for 4K monitors */
+  html {
+    font-size: 20px; /* Scaling up the base font size for 4K */
+  }
+}
+
+/* Dark Mode Support */
+.dark {
+  --bg-primary: #020617;
+  --bg-secondary: #0f172a;
+  background-color: var(--bg-primary);
+}
