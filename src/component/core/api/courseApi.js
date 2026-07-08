@@ -1,13 +1,13 @@
 import axiosInstance from "./axiosInstance";
 
 /**
- * Fetch all courses/blogs
+ * Fetch all movies
  * @param {Object} params - Query parameters (skip, limit, etc.)
- * @returns {Promise} Array of courses/blogs
+ * @returns {Promise} Array of movies
  */
 export const getAllCourses = async (params = {}) => {
   try {
-    const response = await axiosInstance.get("/courseapi", { params });
+    const response = await axiosInstance.get("/getallmovie", { params });
     return response.data;
   } catch (error) {
     throw error;
@@ -15,12 +15,41 @@ export const getAllCourses = async (params = {}) => {
 };
 
 /**
- * Fetch all movies
+ * Fetch all movies (alias)
  * @returns {Promise} Array of movies
  */
 export const getAllMovies = async () => {
   try {
     const response = await axiosInstance.get("/getallmovie");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Fetch a single movie by ID
+ * @param {string} id - Movie ID
+ * @returns {Promise} Movie object
+ */
+export const getMovieById = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/getallmovie/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Update a movie by ID (used to persist embedded comments)
+ * @param {string} id - Movie ID
+ * @param {Object} movieData - Full/partial movie object to update
+ * @returns {Promise} Updated movie object
+ */
+export const updateMovie = async (id, movieData) => {
+  try {
+    const response = await axiosInstance.put(`/getallmovie/${id}`, movieData);
     return response.data;
   } catch (error) {
     throw error;

@@ -35,7 +35,7 @@ const Hero = ({ items }) => {
             {/* 1. BACKGROUND LAYER: The Movie Poster/Image */}
             <div className="absolute inset-0 w-full h-full">
               <img
-                src={item.poster_url || backup}
+                src={item.poster || item.poster_url || backup}
                 className="w-full h-full object-center object-top" // object-top ensures faces aren't cut off
                 alt={item.title}
               />
@@ -53,11 +53,11 @@ const Hero = ({ items }) => {
                   transition={{ duration: 0.8 }}
                 >
                   {/* Category Badge */}
-                  {item.category && (
+                  {item.category || (Array.isArray(item.genre) ? item.genre[0] : item.genre) ? (
                     <span className="inline-block text-rose-500 text-sm font-bold tracking-widest uppercase mb-4 bg-rose-500/10 px-3 py-1 rounded-md">
-                      {item.category}
+                      {item.category || (Array.isArray(item.genre) ? item.genre[0] : item.genre)}
                     </span>
-                  )}
+                  ) : null}
 
                   {/* Title */}
                   <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-4 drop-shadow-2xl">
@@ -78,9 +78,9 @@ const Hero = ({ items }) => {
                         {item.rating || "N/A"}
                       </span>
                     </div>
-                    {item.release_year && (
+                    {(item.year || item.release_year || item.releaseDate) && (
                       <span className="text-gray-400 text-lg">
-                        {item.release_year}
+                        {item.year || item.release_year || item.releaseDate?.split("-")[0]}
                       </span>
                     )}
                   </div>

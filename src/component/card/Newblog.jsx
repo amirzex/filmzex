@@ -63,7 +63,9 @@ export const Newblog = ({ item, index = 0 }) => {
   };
 
   // Get category from item
-  const category = item.category || item.genre || "Article";
+  const category = Array.isArray(item.category || item.genre)
+    ? (item.category || item.genre).join(", ")
+    : (item.category || item.genre || "Article");
 
   // Get year from item
   const year =
@@ -93,7 +95,7 @@ export const Newblog = ({ item, index = 0 }) => {
       <div className="relative overflow-hidden aspect-[4/3] bg-gray-800">
         <img
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-          src={!imageError ? item.poster_url : backup}
+          src={!imageError ? (item.poster || item.poster_url) : backup}
           onError={(e) => {
             setImageError(true);
             e.target.src = backup;

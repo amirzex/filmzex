@@ -73,7 +73,9 @@ const BLOG = ({ item, featured = false, index = 0 }) => {
   };
 
   // Get category from item
-  const category = item.category || item.genre || "Article";
+  const category = Array.isArray(item.category || item.genre)
+    ? (item.category || item.genre).join(", ")
+    : (item.category || item.genre || "Article");
 
   return (
     <motion.div
@@ -87,7 +89,7 @@ const BLOG = ({ item, featured = false, index = 0 }) => {
       {/* Image Container */}
       <div className="relative overflow-hidden h-120 aspect-[16/9] bg-gray-800">
         <img
-          src={!imageError ? item?.poster_url : backup}
+          src={!imageError ? (item?.poster || item?.poster_url) : backup}
           onError={(e) => {
             setImageError(true);
             e.target.src = backup;

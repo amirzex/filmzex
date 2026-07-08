@@ -97,10 +97,14 @@ const AccordionMenu = ({ ratingsData, onFiltersChange }) => {
     new Set(ratingsData.map((item) => item.rating))
   );
   const uniqueYears = Array.from(
-    new Set(ratingsData.map((item) => item.release_year))
+    new Set(ratingsData.map((item) => item.year || item.release_year))
   );
   const uniquegenre = Array.from(
-    new Set(ratingsData.map((item) => item.genre))
+    new Set(
+      ratingsData.flatMap((item) =>
+        Array.isArray(item.genre) ? item.genre : [item.genre]
+      )
+    )
   );
   const uniqueid = Array.from(new Set(ratingsData.map((item) => item.id)));
 

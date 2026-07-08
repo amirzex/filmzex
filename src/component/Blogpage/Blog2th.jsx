@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllCourses } from "../core/api/courseApi";
+import { getMovieById } from "../core/api/courseApi";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -33,10 +33,9 @@ const Blog2th = () => {
     const loadMovie = async () => {
       setLoading(true);
       try {
-        const data = await getAllCourses();
-        const res = { status: 200, data };
-        if (res.status === 200 && res.data) {
-          setMovie(Array.isArray(res.data) ? res.data[id - 1] : res.data);
+        const data = await getMovieById(id);
+        if (data) {
+          setMovie(data);
         } else {
           setError("Movie data not found.");
         }
@@ -133,7 +132,7 @@ const Blog2th = () => {
           className="w-full mb-8 rounded-2xl overflow-hidden shadow-2xl border border-gray-700 bg-gray-800"
         >
           <img
-            src={!imageError ? movie.poster_url : backup}
+            src={!imageError ? (movie.poster || movie.poster_url) : backup}
             onError={(e) => {
               setImageError(true);
               e.target.src = backup;
@@ -153,7 +152,7 @@ const Blog2th = () => {
           <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
             <div className="flex flex-wrap items-center gap-3">
               <span className="text-sm uppercase text-red-400 font-semibold bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
-                {movie.genre || "Article"}
+                {Array.isArray(movie.genre) ? movie.genre.join(", ") : (movie.genre || "Article")}
               </span>
               {movie.category && (
                 <span className="text-sm uppercase text-purple-400 font-semibold bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">
@@ -193,6 +192,16 @@ const Blog2th = () => {
             </div>
           )}
 
+          {movie.cast && movie.cast.length > 0 && (
+            <div className="flex items-center gap-2 text-sm mb-4">
+              <FiUser className="text-gray-400" />
+              <span className="text-gray-400">Cast:</span>
+              <span className="text-gray-300">
+                {Array.isArray(movie.cast) ? movie.cast.join(", ") : movie.cast}
+              </span>
+            </div>
+          )}
+
           {/* Metadata Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
             {movie.country && (
@@ -209,22 +218,22 @@ const Blog2th = () => {
               </div>
             )}
 
-            {movie.release_year && (
+            {movie.releaseDate && (
               <div className="flex items-center gap-3 bg-gray-700/30 px-4 py-3 rounded-xl hover:bg-gray-700/50 transition-colors">
                 <img
                   src={calendarIcon}
                   alt="Release Year"
                   className="w-6 h-6"
                 />
-                <span className="text-white text-sm">{movie.release_year}</span>
+                <span className="text-white text-sm">{movie.year || movie.release_year || movie.releaseDate?.split("-")[0]}</span>
               </div>
             )}
 
-            {movie.duration_minutes && (
+            {(movie.duration || movie.duration_minutes) && (
               <div className="flex items-center gap-3 bg-gray-700/30 px-4 py-3 rounded-xl hover:bg-gray-700/50 transition-colors">
                 <img src={timeIcon} alt="Duration" className="w-6 h-6" />
                 <span className="text-white text-sm">
-                  {movie.duration_minutes} min
+                  {movie.duration || `${movie.duration_minutes} min`}
                 </span>
               </div>
             )}
@@ -335,9 +344,9 @@ const Blog2th = () => {
           variants={itemVariants}
           className="mt-8 text-center text-gray-500 text-sm border-t border-gray-700/50 pt-4"
         >
-          <span>Published: {movie.release_year || "N/A"}</span>
+          <span>Published: {movie.year || movie.release_year || movie.releaseDate?.split("-")[0] || "N/A"}</span>
           <span className="mx-2">•</span>
-          <span>Genre: {movie.genre || "N/A"}</span>
+          <span>Genre: {Array.isArray(movie.genre) ? movie.genre.join(", ") : (movie.genre || "N/A")}</span>
           <span className="mx-2">•</span>
           <span>ID: #{movie.id}</span>
         </motion.div>

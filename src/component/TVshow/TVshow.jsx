@@ -25,7 +25,7 @@ export const TVshow = () => {
       const tvShows = results.filter(
         (item) => item.type && item.type.toLowerCase().includes("tv_show"),
       );
-      setMovie(tvShows.length > 0 ? tvShows : results.slice(1, 30));
+      setMovie(tvShows.length > 0 ? tvShows : results);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -43,9 +43,11 @@ export const TVshow = () => {
       (item.title || item.name || "")
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      (item.genre || item.category || "")
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()),
+      (Array.isArray(item.genre)
+        ? item.genre.join(" ").toLowerCase().includes(searchTerm.toLowerCase())
+        : (item.genre || item.category || "")
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())),
   );
 
   // Pagination

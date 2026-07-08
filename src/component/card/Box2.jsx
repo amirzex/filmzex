@@ -41,7 +41,7 @@ const Box2 = ({ item }) => {
 
         {/* Image */}
         <img
-          src={!imageError ? item.poster_url : backup}
+          src={!imageError ? (item.poster || item.poster_url) : backup}
           onError={(e) => {
             setImageError(true);
             e.target.src = backup;

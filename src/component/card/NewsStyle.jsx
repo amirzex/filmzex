@@ -10,7 +10,7 @@ const NewsStyle = ({ item }) => {
       className="relative flex flex-col  w-full transition-all duration-300"
     >
       <img
-        src={item.poster_url}
+        src={item.poster || item.poster_url}
         onError={(e) => {
           e.target.onerror = null;
           e.target.src = backup;
@@ -22,7 +22,7 @@ const NewsStyle = ({ item }) => {
         <h3 className=" text-2xl">
           <b>{item.title}</b>
         </h3>
-        <h3 className=" text-rose-400">{item.category}</h3>
+        <h3 className=" text-rose-400">{Array.isArray(item.genre) ? item.genre[0] : (item.category || item.genre)}</h3>
       </div>
     </div>
   );

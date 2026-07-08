@@ -22,10 +22,10 @@ function Showall() {
     setLoading(true);
     try {
       const results = await getAllCourses();
-      setBlog(results);
+      setAllItems(results);
       const startIndex = (currentPage - 1) * itemsPerPage;
       setDisplayItems(
-        results.data.slice(startIndex, startIndex + itemsPerPage)
+        results.slice(startIndex, startIndex + itemsPerPage)
       );
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -42,7 +42,9 @@ function Showall() {
   const filteredItems = searchTerm 
     ? allItems.filter(item => 
         (item.title || item.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (item.genre || item.category || "").toLowerCase().includes(searchTerm.toLowerCase())
+        (Array.isArray(item.genre)
+          ? item.genre.join(" ").toLowerCase().includes(searchTerm.toLowerCase())
+          : (item.genre || item.category || "").toLowerCase().includes(searchTerm.toLowerCase()))
       )
     : allItems;
 

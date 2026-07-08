@@ -39,7 +39,9 @@ const Box = ({ item, featured = false, index = 0 }) => {
   };
 
   // Get genre from item
-  const genre = item.genre || item.category || "Movie";
+  const genre = Array.isArray(item.genre)
+    ? item.genre.join(", ")
+    : (item.genre || item.category || "Movie");
 
   // Get year from item
   const year =
@@ -57,7 +59,7 @@ const Box = ({ item, featured = false, index = 0 }) => {
       {/* Image Container */}
       <div className="relative overflow-hidden aspect-[2/3] bg-gray-800">
         <img
-          src={!imageError ? item.poster_url : backup}
+          src={!imageError ? (item.poster || item.poster_url) : backup}
           onError={(e) => {
             setImageError(true);
             e.target.src = backup;
@@ -99,17 +101,6 @@ const Box = ({ item, featured = false, index = 0 }) => {
           </div>
         )}
 
-        {/* Rating Badge - Top Right */}
-        {item.rating && (
-          <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-2.5 py-1.5 rounded-lg border border-yellow-500/30">
-            <div className="flex items-center gap-1">
-              <img src={star} className="w-4 h-4" alt="Rating" />
-              <span className="text-xs font-bold text-yellow-400">
-                {item.rating}
-              </span>
-            </div>
-          </div>
-        )}
 
         {/* Like Button - Top Right (overrides rating if both present) */}
         <motion.button

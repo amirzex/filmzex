@@ -28,7 +28,7 @@ export const Movie = () => {
           item.type?.toLowerCase().includes("movie") ||
           item.category?.toLowerCase().includes("movie"),
       );
-      setMovie(movies.length > 0 ? movies : results.slice(1, 30));
+      setMovie(movies.length > 0 ? movies : results);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -46,9 +46,11 @@ export const Movie = () => {
       (item.title || item.name || "")
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      (item.genre || item.category || "")
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()),
+      (Array.isArray(item.genre)
+        ? item.genre.join(" ").toLowerCase().includes(searchTerm.toLowerCase())
+        : (item.genre || item.category || "")
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())),
   );
 
   // Pagination

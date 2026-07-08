@@ -25,9 +25,9 @@ const List = () => {
     setError(null);
     try {
       const results = await getAllMovies();
-      setItems(results.slice(1, 6));
-      setItems2(results.slice(10, 15));
-      setItems3(results.slice(18, 19));
+      setItems(results.slice(0, 5));
+      setItems2(results.slice(5, 10));
+      setItems3(results.slice(0, 1));
     } catch (error) {
       console.error("Error fetching data:", error);
       setError("Failed to load content. Please try again.");

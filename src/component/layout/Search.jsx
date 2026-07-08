@@ -69,7 +69,9 @@ const Search = () => {
     (item) =>
       item.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.genre?.toLowerCase().includes(searchTerm.toLowerCase()),
+      (Array.isArray(item.genre)
+        ? item.genre.join(" ").toLowerCase().includes(searchTerm.toLowerCase())
+        : item.genre?.toLowerCase().includes(searchTerm.toLowerCase())),
   );
 
   const handleSearch = (term) => {
@@ -239,7 +241,7 @@ const Search = () => {
                             }`}
                           >
                             <img
-                              src={item.poster_url}
+                              src={item.poster || item.poster_url}
                               onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src = backup;
@@ -255,7 +257,7 @@ const Search = () => {
                                 {item.genre && (
                                   <span className="flex items-center gap-1">
                                     <FaFilm className="w-3 h-3" />
-                                    {item.genre}
+                                    {Array.isArray(item.genre) ? item.genre.join(", ") : item.genre}
                                   </span>
                                 )}
                                 {item.rating && (
