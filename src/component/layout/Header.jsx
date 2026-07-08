@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { FiMenu, FiX } from "react-icons/fi";
 import logo from "../../assets/landing/logo-removebg-preview.png";
 import panel from "../../assets/landing/icons8-profile-50.png";
 import Search from "./Search";
@@ -7,6 +8,7 @@ import Search from "./Search";
 const Header = () => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -26,14 +28,24 @@ const Header = () => {
     } after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:bg-red-500 after:transition-all after:duration-300`;
 
   return (
-    <header className="sticky w-full top-0 z-50 bg-slate-950/60 backdrop-blur-md border-b py-4 border-white/10 px-6 md:px-12 transition-all duration-300">
-      <div className="mx-auto flex items-center justify-between gap-4">
+    <header className="sticky w-full top-0 z-50 bg-slate-950/60 backdrop-blur-md border-b py-4 border-white/10 px-4 sm:px-6 md:px-12 transition-all duration-300">
+      <div className="mx-auto flex items-center justify-between gap-3 sm:gap-4">
         {/* Left Side: Logo & Navigation */}
-        <div className="flex items-center gap-12">
+        <div className="flex items-center gap-4 md:gap-12">
+          {/* Mobile menu toggle */}
+          <button
+            onClick={() => setMenuOpen((prev) => !prev)}
+            className="lg:hidden text-gray-200 hover:text-white transition-colors p-1"
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+          </button>
+
           <Link to="/" className="flex items-center">
             <img
               src={logo}
-              className="h-10 w-auto object-contain hover:opacity-85 transition-opacity"
+              className="h-9 sm:h-10 w-auto object-contain hover:opacity-85 transition-opacity"
               alt="Logo"
             />
           </Link>
@@ -55,7 +67,7 @@ const Header = () => {
         </div>
 
         {/* Right Side: Search, Sign Up (hidden when logged in), & Profile */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 sm:gap-6">
           {/* Search Box Wrapper */}
           <div className="relative ">
             <Search />
@@ -104,6 +116,34 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Navigation Dropdown */}
+      {menuOpen && (
+        <nav className="lg:hidden mt-4 flex flex-col gap-1 border-t border-white/10 pt-4">
+          {[
+            { to: "/", label: "Home" },
+            { to: "/Movie", label: "Movies" },
+            { to: "/TVshow", label: "TV Shows" },
+            { to: "/Blogstyle", label: "Blog" },
+          ].map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.to === "/"}
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `px-3 py-3 rounded-lg text-sm font-semibold uppercase tracking-wider transition-colors ${
+                  isActive
+                    ? "bg-red-500/15 text-red-400"
+                    : "text-gray-300 hover:bg-white/5 hover:text-white"
+                }`
+              }
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+      )}
     </header>
   );
 };

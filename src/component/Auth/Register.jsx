@@ -99,7 +99,7 @@ function Register() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-transparent p-4">
       <div className="w-full max-w-5xl">
-        <div className="flex flex-col h-150 md:flex-row rounded-2xl overflow-hidden bg-gray-800/40 backdrop-blur-md border border-gray-700 shadow-2xl">
+        <div className="flex flex-col md:h-150 md:flex-row rounded-2xl overflow-hidden bg-gray-800/40 backdrop-blur-md border border-gray-700 shadow-2xl">
           {/* Left side - Image (hidden on mobile) */}
           <div className="hidden md:block md:w-2/5 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-red-600/30 via-purple-600/30 to-blue-600/30 z-10" />

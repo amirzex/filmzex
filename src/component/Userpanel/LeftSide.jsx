@@ -57,7 +57,7 @@ const LeftSide = () => {
   };
 
   return (
-    <div className="bg-gray-800/40 backdrop-blur-md flex flex-col justify-between w-[260px] p-5 gap-4 h-screen sticky top-0 border-r border-gray-700">
+    <div className="bg-gray-800/40 backdrop-blur-md flex flex-col lg:justify-between w-full lg:w-[260px] p-4 lg:p-5 gap-4 lg:h-screen lg:sticky lg:top-0 rounded-xl lg:rounded-none border-b lg:border-b-0 lg:border-r border-gray-700">
       {/* User Profile */}
       <div className="flex items-center gap-3 pb-4 border-b border-gray-700">
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-purple-600 flex items-center justify-center text-white font-bold">
@@ -72,7 +72,7 @@ const LeftSide = () => {
       </div>
 
       {/* Menu */}
-      <div className="flex-1">
+      <div className="flex flex-row lg:flex-col lg:flex-1 gap-1 overflow-x-auto lg:overflow-visible">
         {menuItems?.map((item) => {
           const Icon = item.icon;
           return (
@@ -80,7 +80,7 @@ const LeftSide = () => {
               key={item.id}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-3 p-3 rounded-xl mb-1 transition-all duration-300 ${
+                `flex flex-shrink-0 items-center gap-3 p-3 rounded-xl mb-0 lg:mb-1 whitespace-nowrap transition-all duration-300 ${
                   isActive
                     ? "bg-red-500/20 text-red-400"
                     : "text-gray-300 hover:bg-gray-700/50 hover:text-white"

@@ -98,17 +98,17 @@ export const TVshow = () => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="min-h-screen bg-transparent px-4 md:px-8 lg:px-12 py-8"
+      className="min-h-screen bg-transparent px-4 md:px-8 lg:px-12 py-6 md:py-8"
     >
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
-        <motion.div variants={itemVariants} className="mb-8">
+        <motion.div variants={itemVariants} className="mb-6 md:mb-8">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white flex items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white flex flex-wrap items-center gap-2 sm:gap-3">
                 <FaTv className="text-red-500" />
                 TV Shows
-                <span className="text-sm text-gray-500 bg-white/5 px-3 py-1 rounded-full border border-white/10 ml-2">
+                <span className="text-xs sm:text-sm text-gray-500 bg-white/5 px-2.5 sm:px-3 py-1 rounded-full border border-white/10">
                   {filteredTVshows?.length || 0} shows
                 </span>
               </h1>
@@ -181,7 +181,7 @@ export const TVshow = () => {
             {currentItems?.length > 0 ? (
               <motion.div
                 variants={containerVariants}
-                className="flex flex-row flex-wrap justify-center gap-5 md:gap-6"
+                className="flex flex-row flex-wrap justify-center gap-3 sm:gap-5 md:gap-6"
               >
                 <AnimatePresence>
                   {currentItems.map((item, index) => (

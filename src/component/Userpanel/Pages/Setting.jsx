@@ -89,8 +89,8 @@ const Setting = () => {
   return (
     <div className="w-full p-5 bg-gray-800/40 backdrop-blur-md">
       {/* Header */}
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-white">Settings</h1>
+      <div className="flex flex-wrap justify-between items-center gap-3 mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white">Settings</h1>
         <button
           onClick={handleSaveSettings}
           className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
@@ -110,19 +110,19 @@ const Setting = () => {
       <div className="flex flex-col gap-6 w-full">
         {/* Sidebar Navigation */}
         <div className="w-full flex flex-row justify-center items-center">
-          <div className="bg-gray-800/40 backdrop-blur-md w-full flex flex-row gap-5 rounded-xl p-4 sticky top-5">
+          <div className="bg-gray-800/40 backdrop-blur-md w-full flex flex-row gap-2 sm:gap-5 rounded-xl p-3 sm:p-4 overflow-x-auto">
             {sections.map((section) => (
               <button
                 key={section.id}
                 onClick={() => setActiveSection(section.id)}
-                className={` flex flex-row items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 mb-1 ${
+                className={`flex flex-shrink-0 flex-row items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg whitespace-nowrap transition-all duration-300 ${
                   activeSection === section.id
                     ? "bg-red-500/90 text-white"
                     : "text-gray-400 hover:bg-gray-700/50 hover:text-white"
                 }`}
               >
                 <section.icon size={18} />
-                <span>{section.name}</span>
+                <span className="text-sm sm:text-base">{section.name}</span>
               </button>
             ))}
           </div>

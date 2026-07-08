@@ -4,9 +4,9 @@ import LeftSide from "./LeftSide";
 
 const UserPanelLayout = () => {
   return (
-    <div className=" flex flex-row justify-center items-start gap-5 p-5">
+    <div className="flex flex-col lg:flex-row justify-center items-stretch gap-3 lg:gap-5 p-2 sm:p-5">
       <LeftSide />
-      <div className="flex-1 ">
+      <div className="flex-1 min-w-0">
         <Outlet />
       </div>
     </div>

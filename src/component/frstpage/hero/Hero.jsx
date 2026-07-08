@@ -60,18 +60,18 @@ const Hero = ({ items }) => {
                   ) : null}
 
                   {/* Title */}
-                  <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-4 drop-shadow-2xl">
+                  <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold text-white mb-4 drop-shadow-2xl">
                     {item.title}
                   </h1>
 
                   {/* Description */}
-                  <p className="text-lg md:text-xl text-gray-300 mb-8 line-clamp-3 max-w-2xl drop-shadow-md">
+                  <p className="text-sm sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 line-clamp-3 max-w-2xl drop-shadow-md">
                     {item.description ||
                       "Experience the journey of a lifetime in this breathtaking cinematic masterpiece."}
                   </p>
 
                   {/* Meta Info (Year & Rating) */}
-                  <div className="flex items-center gap-6 mb-8">
+                  <div className="flex items-center gap-4 sm:gap-6 mb-6 sm:mb-8">
                     <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-lg border border-white/20">
                       <img src={star} className="w-5 h-5" alt="star" />
                       <span className="text-white font-bold">
@@ -86,17 +86,17 @@ const Hero = ({ items }) => {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                     <button
                       onClick={() => navigate("/team/" + item.id)}
-                      className="flex items-center gap-2 bg-white text-black px-8 py-3 rounded-full font-bold text-lg hover:bg-red-500 hover:text-white transition-all duration-300 shadow-xl"
+                      className="flex items-center gap-2 bg-white text-black px-5 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold text-base sm:text-lg hover:bg-red-500 hover:text-white transition-all duration-300 shadow-xl"
                     >
                       <FiPlay fill="currentColor" /> Play Now
                     </button>
 
                     <button
                       onClick={() => navigate("/team/" + item.id)}
-                      className="flex items-center gap-2 bg-gray-500/30 backdrop-blur-md text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white/20 transition-all duration-300"
+                      className="flex items-center gap-2 bg-gray-500/30 backdrop-blur-md text-white px-5 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold text-base sm:text-lg hover:bg-white/20 transition-all duration-300"
                     >
                       <FiInfo /> More Info
                     </button>

@@ -189,7 +189,7 @@ const Dashboard = () => {
 
         {/* Suggested Items Grid */}
         {!loading && (
-          <div className="flex flex-row justify-center items-center gap-5 ">
+          <div className="flex flex-row flex-wrap justify-center items-stretch gap-4 sm:gap-5 ">
             {filteredData?.length > 0 ? (
               filteredData.map((item) => (
                 <SuggestedCard key={item?.id} item={item} />

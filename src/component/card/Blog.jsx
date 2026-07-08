@@ -87,7 +87,7 @@ const BLOG = ({ item, featured = false, index = 0 }) => {
       className="relative flex flex-col rounded-2xl overflow-hidden shadow-lg h-auto bg-gray-800/40 backdrop-blur-md border border-gray-700/50 hover:border-red-400/40 transition-all duration-300 cursor-pointer group hover:shadow-2xl hover:shadow-red-500/10"
     >
       {/* Image Container */}
-      <div className="relative overflow-hidden h-120 aspect-[16/9] bg-gray-800">
+      <div className="relative overflow-hidden h-64 sm:h-80 md:h-96 bg-gray-800">
         <img
           src={!imageError ? (item?.poster || item?.poster_url) : backup}
           onError={(e) => {

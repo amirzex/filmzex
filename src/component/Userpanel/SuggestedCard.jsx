@@ -2,7 +2,7 @@ import { FiHeart } from "react-icons/fi";
 
 const SuggestedCard = ({ item }) => {
   return (
-    <div className="bg-gray-700/30 w-[20%] rounded-lg overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
+    <div className="bg-gray-700/30 w-[46%] sm:w-40 md:w-[20%] rounded-lg overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
       {/* Image/Placeholder */}
       <div className="h-32 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center overflow-hidden">
         <img src={item?.poster || item?.poster_url} className="w-full" />

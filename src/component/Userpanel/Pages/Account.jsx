@@ -75,8 +75,8 @@ const Account = () => {
   return (
     <div className="w-full p-5  bg-gray-800/40 backdrop-blur-md">
       {/* Page Header */}
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-white">Personal Information</h1>
+      <div className="flex flex-wrap justify-between items-center gap-3 mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white">Personal Information</h1>
         {!isEditing ? (
           <button
             onClick={() => setIsEditing(true)}

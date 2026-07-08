@@ -15,11 +15,11 @@ const NewsStyle = ({ item }) => {
           e.target.onerror = null;
           e.target.src = backup;
         }}
-        className="w-full h-130"
+        className="w-full h-64 sm:h-96 md:h-130 object-cover"
         alt="Film Poster"
       />
-      <div className="w-full h-auto flex flex-col items-start gap-5 p-5 bg-gray/80 backdrop-blur-md absolute bottom-0 ">
-        <h3 className=" text-2xl">
+      <div className="w-full h-auto flex flex-col items-start gap-3 sm:gap-5 p-4 sm:p-5 bg-gray/80 backdrop-blur-md absolute bottom-0 ">
+        <h3 className="text-lg sm:text-2xl">
           <b>{item.title}</b>
         </h3>
         <h3 className=" text-rose-400">{Array.isArray(item.genre) ? item.genre[0] : (item.category || item.genre)}</h3>

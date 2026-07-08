@@ -65,7 +65,7 @@ const Comment = () => {
       onSubmit={Addcomment}
     >
       {({ handleSubmit }) => (
-        <Form className="border-2 w-[1920px] scale-90 " onSubmit={handleSubmit}>
+        <Form className="w-full max-w-4xl mx-auto px-4 py-6" onSubmit={handleSubmit}>
           {loading ? (
             <div className="loader-container">
               <div className="loader">
@@ -75,12 +75,12 @@ const Comment = () => {
               </div>
             </div>
           ) : (
-            <div className="border-2 scale-90 flex flex-col gap-5 p-5">
+            <div className="flex flex-col gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl border border-gray-700 bg-gray-800/40 backdrop-blur-md">
               <Field
                 type="text"
                 name="username"
                 placeholder="username:"
-                className="bg-gray-300 h-15 pl-5 rounded-2xl"
+                className="bg-gray-300 h-12 sm:h-15 pl-5 rounded-2xl w-full"
               />
               <ErrorMessage name="username" component="div" className="error" />
 
@@ -88,7 +88,7 @@ const Comment = () => {
                 type="text"
                 name="tag"
                 placeholder="your tag(#0111):"
-                className="bg-gray-300 h-15 pl-5 rounded-2xl"
+                className="bg-gray-300 h-12 sm:h-15 pl-5 rounded-2xl w-full"
               />
               <ErrorMessage name="tag" component="div" className="error" />
 
@@ -96,12 +96,12 @@ const Comment = () => {
                 type="text"
                 name="comment"
                 placeholder="type your things:"
-                className="bg-gray-300 h-15 pl-5 rounded-2xl"
+                className="bg-gray-300 h-12 sm:h-15 pl-5 rounded-2xl w-full"
               />
               <ErrorMessage name="comment" component="div" className="error" />
 
               <input
-                className={`bg-blue-300 w-25 p-5 rounded-2xl m-auto text-center ${
+                className={`bg-blue-300 w-full sm:w-32 p-3 sm:p-5 rounded-2xl m-auto text-center cursor-pointer ${
                   clicked ? "animate-move" : ""
                 }`}
                 type="submit"
@@ -109,7 +109,9 @@ const Comment = () => {
               />
             </div>
           )}
-          <Commentresults comments={comments} setComments={setComments} />
+          <div className="mt-6">
+            <Commentresults comments={comments} setComments={setComments} />
+          </div>
         </Form>
       )}
     </Formik>

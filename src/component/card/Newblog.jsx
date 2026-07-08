@@ -89,7 +89,7 @@ export const Newblog = ({ item, index = 0 }) => {
       animate="visible"
       whileHover="hover"
       onClick={handleClick}
-      className="relative w-80 max-w-sm rounded-2xl overflow-hidden shadow-lg bg-gray-800/40 backdrop-blur-md border border-gray-700/50 hover:border-red-400/40 transition-all duration-300 cursor-pointer group hover:shadow-2xl hover:shadow-red-500/20"
+      className="relative w-full max-w-[22rem] sm:w-80 rounded-2xl overflow-hidden shadow-lg bg-gray-800/40 backdrop-blur-md border border-gray-700/50 hover:border-red-400/40 transition-all duration-300 cursor-pointer group hover:shadow-2xl hover:shadow-red-500/20"
     >
       {/* Image Container */}
       <div className="relative overflow-hidden aspect-[4/3] bg-gray-800">
