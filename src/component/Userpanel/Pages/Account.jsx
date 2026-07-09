@@ -73,7 +73,7 @@ const Account = () => {
   };
 
   return (
-    <div className="w-full max-w-full overflow-x-hidden p-3 sm:p-5  bg-gray-800/40 backdrop-blur-md">
+    <div className="w-full max-w-full overflow-x-clip p-3 sm:p-5  bg-gray-800/40 backdrop-blur-md">
       {/* Page Header */}
       <div className="flex flex-wrap justify-between items-center gap-3 mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-white">Personal Information</h1>

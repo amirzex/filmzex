@@ -13,19 +13,18 @@
 }
 
 /* 2. Prevent horizontal overflow from widening the (mobile) viewport.
-   overflow-x:hidden on body alone is not enough on mobile, so guard
-   html and #root too, otherwise a too-wide element shifts the whole
-   layout to the left and the shift persists across SPA navigation. */
+   Use overflow-x: clip (NOT hidden) so we don't turn these elements into
+   scroll containers, which would break vertical touch scrolling on mobile. */
 html {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 #root {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 
@@ -33,7 +32,7 @@ html {
 body {
   /* Using a subtle overlay on your background image prevents it from clashing with text */
   background-image: url("../src/assets/landing/ad.jpg");
-  background-attachment: fixed; /* Keeps background stable during scroll */
+  background-attachment: fixed; /* Keeps background stable during scroll on desktop */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -41,12 +40,20 @@ body {
   padding: 0;
   width: 100%;
   max-width: 100%;
+  min-height: 100%;
   /* Allows for high-res smooth scrolling */
   scroll-behavior: smooth;
   background-color: var(--bg-primary);
   color: var(--text-main);
-  /* Avoid the 1920px restriction on :root. Use a wrapper in React instead. */
-  overflow-x: hidden;
+  /* Match html/#root: clip avoids creating a scroll container that blocks touch scroll */
+  overflow-x: clip;
+}
+
+/* fixed backgrounds break touch scrolling on iOS / mobile browsers */
+@media (hover: none) and (pointer: coarse) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 /* 4. Modern Scrollbar (Hidden but Functional) */
