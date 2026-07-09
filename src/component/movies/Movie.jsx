@@ -100,7 +100,7 @@ export const Movie = () => {
       variants={containerVariants}
       className="min-h-screen bg-transparent px-4 md:px-8 lg:px-12 py-6 md:py-8"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className=" mx-auto">
         {/* Header Section */}
         <motion.div variants={itemVariants} className="mb-6 md:mb-8">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -181,7 +181,7 @@ export const Movie = () => {
             {currentItems?.length > 0 ? (
               <motion.div
                 variants={containerVariants}
-                className="flex flex-row flex-wrap justify-center gap-3 sm:gap-5 md:gap-6"
+                className="flex flex-row  flex-wrap justify-center gap-3 sm:gap-5 md:gap-6"
               >
                 <AnimatePresence>
                   {currentItems.map((item, index) => (
@@ -190,7 +190,7 @@ export const Movie = () => {
                       variants={itemVariants}
                       whileHover={{ y: -4 }}
                       transition={{ duration: 0.2 }}
-                      className="w-full" 
+                      className="max-sm:w-full  " 
                     >
                       <Box2 item={item} />
                     </motion.div>
