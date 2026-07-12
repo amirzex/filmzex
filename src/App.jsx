@@ -1,13 +1,5 @@
-import { List } from "./component/frstpage/List";
+import HomePage from "@/features/home/HomePage";
 
-function App() {
-  return (
-    <>
-      <div className="">
-        <List />
-      </div>
-    </>
-  );
+export default function App() {
+  return <HomePage />;
 }
-
-export default App;
