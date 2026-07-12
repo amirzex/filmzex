@@ -18,6 +18,10 @@ import {
   FiUserCheck,
   // FiFingerprint,
 } from "react-icons/fi";
+import {
+  PanelShell,
+  PanelHeader,
+} from "@/features/user-panel/components/PanelShell";
 
 const Security = () => {
   const [showPassword, setShowPassword] = useState({
@@ -146,28 +150,31 @@ const Security = () => {
   };
 
   return (
-    <div className="w-full p-5 bg-gray-800/40 backdrop-blur-md">
-      {/* Header */}
-      <div className="flex flex-wrap justify-between items-center gap-3 mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">Security</h1>
-        <div className="flex items-center gap-2 text-green-400 bg-green-400/10 px-4 py-2 rounded-lg">
-          <FiShield className="text-xl" />
-          <span className="font-semibold">Security Score: 85%</span>
-        </div>
-      </div>
+    <PanelShell>
+      <PanelHeader
+        eyebrow="Protection"
+        title="Security"
+        description="Passwords, devices, and account alerts."
+        actions={
+          <div className="flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-emerald-400">
+            <FiShield className="text-lg" />
+            <span className="text-sm font-semibold">Score: 85%</span>
+          </div>
+        }
+      />
 
       {/* Security Status Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4">
+        <div className="rounded-2xl border border-gray-700/60 bg-gray-800/40 p-4">
           <div className="flex items-center justify-between mb-2">
-            <FiShield className="text-blue-400 text-xl" />
+            <FiShield className="text-red-400 text-xl" />
             <span className="text-xs text-gray-400">Status</span>
           </div>
           <p className="text-white font-semibold">2FA Enabled</p>
           <p className="text-xs text-gray-400">Last updated: Today</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4">
+        <div className="rounded-2xl border border-gray-700/60 bg-gray-800/40 p-4">
           <div className="flex items-center justify-between mb-2">
             <FiSmartphone className="text-green-400 text-xl" />
             <span className="text-xs text-gray-400">Devices</span>
@@ -180,7 +187,7 @@ const Security = () => {
           </p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4">
+        <div className="rounded-2xl border border-gray-700/60 bg-gray-800/40 p-4">
           <div className="flex items-center justify-between mb-2">
             <FiClock className="text-yellow-400 text-xl" />
             <span className="text-xs text-gray-400">Last Login</span>
@@ -189,9 +196,9 @@ const Security = () => {
           <p className="text-xs text-gray-400">Chrome on Windows</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4">
+        <div className="rounded-2xl border border-gray-700/60 bg-gray-800/40 p-4">
           <div className="flex items-center justify-between mb-2">
-            <FiAlertCircle className="text-purple-400 text-xl" />
+            <FiAlertCircle className="text-amber-400 text-xl" />
             <span className="text-xs text-gray-400">Failed Attempts</span>
           </div>
           <p className="text-white font-semibold">3 attempts</p>
@@ -203,9 +210,9 @@ const Security = () => {
         {/* Left Column - Password & 2FA */}
         <div className="lg:col-span-2 space-y-6">
           {/* Change Password Section */}
-          <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6">
-            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700 flex items-center gap-2">
-              <FiLock className="text-blue-400" />
+          <div className="rounded-2xl border border-gray-700/60 bg-gray-800/40 p-6">
+            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700/60 flex items-center gap-2">
+              <FiLock className="text-red-400" />
               Change Password
             </h2>
 
@@ -216,7 +223,7 @@ const Security = () => {
                 </label>
                 <input
                   type={showPassword.current ? "text" : "password"}
-                  className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all pr-10"
+                  className="w-full rounded-xl border border-gray-700 bg-gray-900/60 px-4 py-3 text-sm text-white outline-none transition focus:border-red-500/50 pr-10"
                 />
                 <button
                   onClick={() => togglePasswordVisibility("current")}
@@ -232,7 +239,7 @@ const Security = () => {
                 </label>
                 <input
                   type={showPassword.new ? "text" : "password"}
-                  className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all pr-10"
+                  className="w-full rounded-xl border border-gray-700 bg-gray-900/60 px-4 py-3 text-sm text-white outline-none transition focus:border-red-500/50 pr-10"
                 />
                 <button
                   onClick={() => togglePasswordVisibility("new")}
@@ -248,7 +255,7 @@ const Security = () => {
                 </label>
                 <input
                   type={showPassword.confirm ? "text" : "password"}
-                  className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all pr-10"
+                  className="w-full rounded-xl border border-gray-700 bg-gray-900/60 px-4 py-3 text-sm text-white outline-none transition focus:border-red-500/50 pr-10"
                 />
                 <button
                   onClick={() => togglePasswordVisibility("confirm")}
@@ -273,23 +280,23 @@ const Security = () => {
                 <p className="text-xs text-yellow-500">Medium Strength</p>
               </div>
 
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all">
+              <button className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-red-900/30 transition hover:brightness-110">
                 Update Password
               </button>
             </div>
           </div>
 
           {/* Two-Factor Authentication */}
-          <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6">
-            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700 flex items-center gap-2">
-              <FiKey className="text-purple-400" />
+          <div className="rounded-2xl border border-gray-700/60 bg-gray-800/40 p-6">
+            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700/60 flex items-center gap-2">
+              <FiKey className="text-amber-400" />
               Two-Factor Authentication (2FA)
             </h2>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-gray-700/30 rounded-lg">
+              <div className="flex items-center justify-between p-3 border border-white/5 bg-white/[0.03] rounded-lg">
                 <div className="flex items-center gap-3">
-                  <FiShield className="text-blue-400" />
+                  <FiShield className="text-red-400" />
                   <div>
                     <p className="text-white">Enable 2FA</p>
                     <p className="text-xs text-gray-400">
@@ -299,7 +306,7 @@ const Security = () => {
                 </div>
                 <button
                   onClick={() => toggleSecuritySetting("twoFactorAuth")}
-                  className={`text-2xl transition-all ${securitySettings.twoFactorAuth ? "text-blue-400" : "text-gray-500"}`}
+                  className={`text-2xl transition-all ${securitySettings.twoFactorAuth ? "text-red-400" : "text-gray-500"}`}
                 >
                   {securitySettings.twoFactorAuth ? (
                     <FiToggleRight />
@@ -310,11 +317,11 @@ const Security = () => {
               </div>
 
               {securitySettings.twoFactorAuth && (
-                <div className="bg-gray-700/20 rounded-lg p-4">
+                <div className="border border-white/5 bg-white/[0.03] rounded-lg p-4">
                   <p className="text-sm text-gray-300 mb-3">
                     Scan this QR code with Google Authenticator or Authy:
                   </p>
-                  <div className="w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-600 mx-auto mb-3 flex items-center justify-center rounded-lg">
+                  <div className="w-32 h-32 bg-gradient-to-br from-red-500 to-rose-600 mx-auto mb-3 flex items-center justify-center rounded-lg">
                     <span className="text-4xl">📱</span>
                   </div>
                   <p className="text-xs text-gray-400 text-center">
@@ -326,8 +333,8 @@ const Security = () => {
           </div>
 
           {/* Recent Activity */}
-          <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6">
-            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700 flex items-center gap-2">
+          <div className="rounded-2xl border border-gray-700/60 bg-gray-800/40 p-6">
+            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700/60 flex items-center gap-2">
               <FiClock className="text-yellow-400" />
               Recent Activity
             </h2>
@@ -336,7 +343,7 @@ const Security = () => {
               {recentActivities.map((activity) => (
                 <div
                   key={activity.id}
-                  className="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg hover:bg-gray-700/40 transition-all"
+                  className="flex items-center gap-3 p-3 border border-white/5 bg-white/[0.03] rounded-lg hover:bg-white/[0.05] transition-all"
                 >
                   <div className="text-2xl">{activity.icon}</div>
                   <div className="flex-1">
@@ -370,15 +377,15 @@ const Security = () => {
         {/* Right Column - Devices & Security Settings */}
         <div className="space-y-6">
           {/* Connected Devices */}
-          <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6">
-            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700 flex items-center gap-2">
+          <div className="rounded-2xl border border-gray-700/60 bg-gray-800/40 p-6">
+            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700/60 flex items-center gap-2">
               <FiSmartphone className="text-green-400" />
               Connected Devices
             </h2>
 
             <div className="space-y-3">
               {connectedDevices.map((device) => (
-                <div key={device.id} className="p-3 bg-gray-700/30 rounded-lg">
+                <div key={device.id} className="p-3 border border-white/5 bg-white/[0.03] rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <span className="text-xl">{device.icon}</span>
@@ -415,9 +422,9 @@ const Security = () => {
           </div>
 
           {/* Trusted Devices */}
-          <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6">
-            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700 flex items-center gap-2">
-              <FiUserCheck className="text-blue-400" />
+          <div className="rounded-2xl border border-gray-700/60 bg-gray-800/40 p-6">
+            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700/60 flex items-center gap-2">
+              <FiUserCheck className="text-red-400" />
               Trusted Devices
             </h2>
 
@@ -425,7 +432,7 @@ const Security = () => {
               {trustedDevices.map((device) => (
                 <div
                   key={device.id}
-                  className="flex items-center justify-between p-3 bg-gray-700/30 rounded-lg"
+                  className="flex items-center justify-between p-3 border border-white/5 bg-white/[0.03] rounded-lg"
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-xl">{device.icon}</span>
@@ -448,9 +455,9 @@ const Security = () => {
           </div>
 
           {/* Security Settings */}
-          <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6">
-            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700 flex items-center gap-2">
-              <FiShield className="text-purple-400" />
+          <div className="rounded-2xl border border-gray-700/60 bg-gray-800/40 p-6">
+            <h2 className="text-xl font-semibold text-white mb-4 pb-2 border-b border-gray-700/60 flex items-center gap-2">
+              <FiShield className="text-amber-400" />
               Security Preferences
             </h2>
 
@@ -489,7 +496,7 @@ const Security = () => {
               ].map((item) => (
                 <div
                   key={item.key}
-                  className="flex items-center justify-between p-3 bg-gray-700/30 rounded-lg"
+                  className="flex items-center justify-between p-3 border border-white/5 bg-white/[0.03] rounded-lg"
                 >
                   <div className="flex items-center gap-3">
                     <item.icon className="text-gray-400" />
@@ -500,7 +507,7 @@ const Security = () => {
                   </div>
                   <button
                     onClick={() => toggleSecuritySetting(item.key)}
-                    className={`text-2xl transition-all ${securitySettings[item.key] ? "text-blue-400" : "text-gray-500"}`}
+                    className={`text-2xl transition-all ${securitySettings[item.key] ? "text-red-400" : "text-gray-500"}`}
                   >
                     {securitySettings[item.key] ? (
                       <FiToggleRight />
@@ -514,10 +521,10 @@ const Security = () => {
           </div>
 
           {/* Login History Link */}
-          <button className="w-full bg-gray-800/40 backdrop-blur-md rounded-xl p-4 text-left hover:bg-gray-700/40 transition-all">
+          <button className="w-full rounded-2xl border border-gray-700/60 bg-gray-800/40 p-4 text-left hover:bg-white/[0.05] transition-all">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <FiGlobe className="text-blue-400" />
+                <FiGlobe className="text-red-400" />
                 <div>
                   <p className="text-white font-medium">Full Login History</p>
                   <p className="text-xs text-gray-400">
@@ -530,7 +537,7 @@ const Security = () => {
           </button>
         </div>
       </div>
-    </div>
+    </PanelShell>
   );
 };
 

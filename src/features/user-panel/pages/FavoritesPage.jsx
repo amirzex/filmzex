@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { FiHeart, FiTrash2, FiEye, FiStar } from "react-icons/fi";
+import {
+  PanelShell,
+  PanelHeader,
+  PanelCard,
+  panelInputClass,
+} from "@/features/user-panel/components/PanelShell";
 
 const Favorite = () => {
   const [favoriteMovies, setFavoriteMovies] = useState([
@@ -11,7 +17,7 @@ const Favorite = () => {
       rating: 8.8,
       genre: "Sci-Fi",
       poster: "🎬",
-      watched: true
+      watched: true,
     },
     {
       id: 2,
@@ -21,7 +27,7 @@ const Favorite = () => {
       rating: 9.3,
       genre: "Drama",
       poster: "🎬",
-      watched: false
+      watched: false,
     },
     {
       id: 3,
@@ -31,7 +37,7 @@ const Favorite = () => {
       rating: 9.0,
       genre: "Action",
       poster: "🎬",
-      watched: true
+      watched: true,
     },
     {
       id: 4,
@@ -41,7 +47,7 @@ const Favorite = () => {
       rating: 8.9,
       genre: "Crime",
       poster: "🎬",
-      watched: false
+      watched: false,
     },
     {
       id: 5,
@@ -51,159 +57,163 @@ const Favorite = () => {
       rating: 8.8,
       genre: "Drama",
       poster: "🎬",
-      watched: true
-    }
+      watched: true,
+    },
   ]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterGenre, setFilterGenre] = useState("All");
 
-  //  genres filter
-  const genres = ["All", ...new Set(favoriteMovies.map(movie => movie.genre))];
+  const genres = ["All", ...new Set(favoriteMovies.map((movie) => movie.genre))];
 
-  // Filter movies based on search and genre
-  const filteredMovies = favoriteMovies.filter(movie => {
-    const matchesSearch = movie.title.toLowerCase().includes(searchTerm.toLowerCase()) || movie.director.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredMovies = favoriteMovies.filter((movie) => {
+    const matchesSearch =
+      movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      movie.director.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesGenre = filterGenre === "All" || movie.genre === filterGenre;
     return matchesSearch && matchesGenre;
   });
 
   const handleRemoveFromFavorites = (id) => {
-    setFavoriteMovies(favoriteMovies.filter(movie => movie.id !== id));
+    setFavoriteMovies(favoriteMovies.filter((movie) => movie.id !== id));
   };
 
   const handleToggleWatched = (id) => {
-    setFavoriteMovies(favoriteMovies.map(movie =>
-      movie.id === id ? { ...movie, watched: !movie.watched } : movie
-    ));
+    setFavoriteMovies(
+      favoriteMovies.map((movie) =>
+        movie.id === id ? { ...movie, watched: !movie.watched } : movie,
+      ),
+    );
   };
 
   return (
-    <div className="w-full p-5 bg-gray-800/40 backdrop-blur-md">
-      {/* Header */}
-      <div className="flex flex-wrap justify-between items-center gap-3 mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">Favorite Movies</h1>
-        <div className="flex items-center gap-2 text-red-500">
-          <FiHeart className="text-2xl" />
-          <span className="text-xl">{favoriteMovies.length} Movies</span>
-        </div>
-      </div>
+    <PanelShell>
+      <PanelHeader
+        eyebrow="Library"
+        title="Favorite Movies"
+        description="Titles you’ve saved — filter, mark watched, or remove."
+        actions={
+          <div className="flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-2 text-red-400">
+            <FiHeart className="text-lg" />
+            <span className="text-sm font-semibold">
+              {favoriteMovies.length} Movies
+            </span>
+          </div>
+        }
+      />
 
-      {/* Search and Filter Bar */}
-      <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-5 mb-6">
-        <div className="flex flex-col md:flex-row gap-4">
-          {/* Search Input */}
+      <PanelCard className="mb-6 p-4 sm:p-5">
+        <div className="flex flex-col gap-3 md:flex-row">
           <div className="flex-1">
             <input
               type="text"
               placeholder="Search by title or director..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all"
+              className={panelInputClass}
             />
           </div>
-          
-          {/* Genre Filter */}
           <div className="md:w-48">
             <select
               value={filterGenre}
               onChange={(e) => setFilterGenre(e.target.value)}
-              className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
+              className={panelInputClass}
             >
-              {genres.map(genre => (
-                <option key={genre} value={genre} className="bg-gray-800">
+              {genres.map((genre) => (
+                <option key={genre} value={genre} className="bg-gray-900">
                   {genre}
                 </option>
               ))}
             </select>
           </div>
         </div>
-      </div>
+      </PanelCard>
 
-      {/* Movies Table */}
-      <div className="bg-gray-800/40 backdrop-blur-md rounded-xl overflow-hidden">
+      <PanelCard className="overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
-            {/* Table Header */}
-            <thead className="bg-gray-700/50">
-              <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Poster</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Title</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Year</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Director</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Genre</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Rating</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Status</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Actions</th>
+          <table className="w-full min-w-[720px] text-left text-sm">
+            <thead>
+              <tr className="border-b border-gray-700/60 bg-gray-800/60">
+                {[
+                  "Poster",
+                  "Title",
+                  "Year",
+                  "Director",
+                  "Genre",
+                  "Rating",
+                  "Status",
+                  "Actions",
+                ].map((h) => (
+                  <th
+                    key={h}
+                    className="px-4 py-3.5 font-medium text-gray-400 sm:px-6"
+                  >
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
-            
-            {/* Table Body */}
-            <tbody className="divide-y divide-gray-700">
+            <tbody>
               {filteredMovies.length > 0 ? (
                 filteredMovies.map((movie) => (
-                  <tr key={movie.id} className="hover:bg-gray-700/30 transition-all duration-300">
-                    {/* Poster */}
-                    <td className="px-6 py-4">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-2xl">
+                  <tr
+                    key={movie.id}
+                    className="border-b border-gray-800/80 transition hover:bg-white/[0.03] last:border-0"
+                  >
+                    <td className="px-4 py-4 sm:px-6">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-red-500/80 to-rose-600 text-xl">
                         {movie.poster}
                       </div>
                     </td>
-                    
-                    {/* Title */}
-                    <td className="px-6 py-4">
-                      <span className="text-white font-medium">{movie.title}</span>
+                    <td className="px-4 py-4 font-medium text-white sm:px-6">
+                      {movie.title}
                     </td>
-                    
-                    {/* Year */}
-                    <td className="px-6 py-4">
-                      <span className="text-gray-300">{movie.year}</span>
+                    <td className="px-4 py-4 text-gray-300 sm:px-6">
+                      {movie.year}
                     </td>
-                    
-                    {/* Director */}
-                    <td className="px-6 py-4">
-                      <span className="text-gray-300">{movie.director}</span>
+                    <td className="px-4 py-4 text-gray-300 sm:px-6">
+                      {movie.director}
                     </td>
-                    
-                    {/* Genre */}
-                    <td className="px-6 py-4">
-                      <span className="px-3 py-1 bg-blue-600/30 text-blue-300 rounded-full text-sm">
+                    <td className="px-4 py-4 sm:px-6">
+                      <span className="rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs text-red-300">
                         {movie.genre}
                       </span>
                     </td>
-                    
-                    {/* Rating */}
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-1">
-                        <FiStar className="text-yellow-500" />
-                        <span className="text-white">{movie.rating}</span>
+                    <td className="px-4 py-4 sm:px-6">
+                      <div className="flex items-center gap-1 text-white">
+                        <FiStar className="text-amber-400" />
+                        {movie.rating}
                       </div>
                     </td>
-                    
-                    {/* Status */}
-                    <td className="px-6 py-4">
-                      <span className={`px-3 py-1 rounded-full text-sm ${
-                        movie.watched 
-                          ? "bg-green-600/30 text-green-300" 
-                          : "bg-yellow-600/30 text-yellow-300"
-                      }`}>
+                    <td className="px-4 py-4 sm:px-6">
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs ${
+                          movie.watched
+                            ? "border border-emerald-500/20 bg-emerald-500/10 text-emerald-300"
+                            : "border border-amber-500/20 bg-amber-500/10 text-amber-300"
+                        }`}
+                      >
                         {movie.watched ? "Watched" : "Want to Watch"}
                       </span>
                     </td>
-                    
-                    {/* Actions */}
-                    <td className="px-6 py-4">
+                    <td className="px-4 py-4 sm:px-6">
                       <div className="flex items-center gap-3">
                         <button
+                          type="button"
                           onClick={() => handleToggleWatched(movie.id)}
-                          className="text-gray-400 hover:text-blue-500 transition-all"
-                          title={movie.watched ? "Mark as unwatched" : "Mark as watched"}
+                          className="text-gray-400 transition hover:text-red-400"
+                          title={
+                            movie.watched
+                              ? "Mark as unwatched"
+                              : "Mark as watched"
+                          }
                         >
                           <FiEye size={18} />
                         </button>
                         <button
+                          type="button"
                           onClick={() => handleRemoveFromFavorites(movie.id)}
-                          className="text-gray-400 hover:text-red-500 transition-all"
+                          className="text-gray-400 transition hover:text-red-500"
                           title="Remove from favorites"
                         >
                           <FiTrash2 size={18} />
@@ -217,8 +227,12 @@ const Favorite = () => {
                   <td colSpan="8" className="px-6 py-12 text-center">
                     <div className="flex flex-col items-center gap-3">
                       <FiHeart className="text-4xl text-gray-600" />
-                      <p className="text-gray-400 text-lg">No favorite movies found</p>
-                      <p className="text-gray-500 text-sm">Try adjusting your search or filter</p>
+                      <p className="text-lg text-gray-400">
+                        No favorite movies found
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Try adjusting your search or filter
+                      </p>
                     </div>
                   </td>
                 </tr>
@@ -226,51 +240,45 @@ const Favorite = () => {
             </tbody>
           </table>
         </div>
+      </PanelCard>
+
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+        {[
+          {
+            label: "Total Movies",
+            value: favoriteMovies.length,
+            icon: FiHeart,
+            tone: "text-red-400 bg-red-500/15",
+          },
+          {
+            label: "Watched",
+            value: favoriteMovies.filter((m) => m.watched).length,
+            icon: FiEye,
+            tone: "text-emerald-400 bg-emerald-500/15",
+          },
+          {
+            label: "Want to Watch",
+            value: favoriteMovies.filter((m) => !m.watched).length,
+            icon: FiStar,
+            tone: "text-amber-400 bg-amber-500/15",
+          },
+        ].map(({ label, value, icon: Icon, tone }) => (
+          <PanelCard key={label} className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-400">{label}</p>
+                <p className="text-2xl font-bold text-white">{value}</p>
+              </div>
+              <div
+                className={`flex h-10 w-10 items-center justify-center rounded-xl ${tone}`}
+              >
+                <Icon />
+              </div>
+            </div>
+          </PanelCard>
+        ))}
       </div>
-
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-        <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-400 text-sm">Total Movies</p>
-              <p className="text-2xl font-bold text-white">{favoriteMovies.length}</p>
-            </div>
-            <div className="w-10 h-10 bg-blue-600/30 rounded-lg flex items-center justify-center">
-              <FiHeart className="text-blue-400" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-400 text-sm">Watched</p>
-              <p className="text-2xl font-bold text-white">
-                {favoriteMovies.filter(m => m.watched).length}
-              </p>
-            </div>
-            <div className="w-10 h-10 bg-green-600/30 rounded-lg flex items-center justify-center">
-              <FiEye className="text-green-400" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-400 text-sm">Want to Watch</p>
-              <p className="text-2xl font-bold text-white">
-                {favoriteMovies.filter(m => !m.watched).length}
-              </p>
-            </div>
-            <div className="w-10 h-10 bg-yellow-600/30 rounded-lg flex items-center justify-center">
-              <FiStar className="text-yellow-400" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </PanelShell>
   );
 };
 

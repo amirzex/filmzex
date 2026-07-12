@@ -16,7 +16,7 @@ export const ROUTES = {
   dashboard: "/userpanel/dashboard",
   account: "/userpanel/account",
   favorites: "/userpanel/favorite",
-  purchases: "/userpanel/buy",
+  purchases: "/userpanel/buy", // subscription plans (demo)
   settings: "/userpanel/setting",
   security: "/userpanel/security",
 };

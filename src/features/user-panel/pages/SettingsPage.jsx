@@ -8,7 +8,6 @@ import {
   FiUser,
   FiSave,
   FiVolume2,
-  FiDownload,
 } from "react-icons/fi";
 import Profile from "@/features/user-panel/settings/Profile";
 import Privacy from "@/features/user-panel/settings/Privacy";
@@ -18,43 +17,36 @@ import LanguageAndRegion from "@/features/user-panel/settings/LanguageRegion";
 import Security from "@/features/user-panel/settings/Security";
 import Playback from "@/features/user-panel/settings/Playback";
 import DataAndStorage from "@/features/user-panel/settings/DataStorage";
+import {
+  PanelShell,
+  PanelHeader,
+  PanelCard,
+  panelBtnPrimaryClass,
+} from "@/features/user-panel/components/PanelShell";
 
 const Setting = () => {
   const [settings, setSettings] = useState({
-    // Profile Settings
     username: "alireza_m",
     email: "alireza@email.com",
     fullName: "Alireza Mohammadi",
-
-    // Privacy Settings
-    profileVisibility: "public", // public, friends, private
+    profileVisibility: "public",
     showEmail: false,
     showActivity: true,
-
-    // Notification Settings
     emailNotifications: true,
     pushNotifications: false,
     smsNotifications: false,
     marketingEmails: false,
-
-    // Appearance
-    theme: "dark", // dark, light, system
-    fontSize: "medium", // small, medium, large
+    theme: "dark",
+    fontSize: "medium",
     compactMode: false,
-
-    // Language & Region
     language: "english",
     timezone: "UTC+3:30",
     dateFormat: "YYYY-MM-DD",
-
-    // Security
     twoFactorAuth: false,
     loginAlerts: true,
-    sessionTimeout: 30, // minutes
-
-    // Playback Settings
+    sessionTimeout: 30,
     autoplay: true,
-    quality: "auto", // auto, 1080p, 720p, 480p
+    quality: "auto",
     subtitles: true,
     volume: 80,
   });
@@ -63,15 +55,11 @@ const Setting = () => {
   const [isSaved, setIsSaved] = useState(false);
 
   const handleSettingChange = (key, value) => {
-    setSettings((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+    setSettings((prev) => ({ ...prev, [key]: value }));
     setIsSaved(false);
   };
 
   const handleSaveSettings = () => {
-    // Here you would typically save to backend
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 3000);
   };
@@ -87,108 +75,91 @@ const Setting = () => {
   ];
 
   return (
-    <div className="w-full p-5 bg-gray-800/40 backdrop-blur-md">
-      {/* Header */}
-      <div className="flex flex-wrap justify-between items-center gap-3 mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">Settings</h1>
-        <button
-          onClick={handleSaveSettings}
-          className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
-        >
-          <FiSave />
-          <span>Save Changes</span>
-        </button>
-      </div>
+    <PanelShell>
+      <PanelHeader
+        eyebrow="Preferences"
+        title="Settings"
+        description="Tune profile, privacy, playback, and more."
+        actions={
+          <button
+            type="button"
+            onClick={handleSaveSettings}
+            className={panelBtnPrimaryClass}
+          >
+            <FiSave />
+            Save Changes
+          </button>
+        }
+      />
 
-      {/* Save Notification */}
       {isSaved && (
-        <div className="fixed top-5 right-5 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+        <div className="fixed right-5 top-5 z-50 rounded-xl border border-emerald-500/30 bg-emerald-600/90 px-5 py-3 text-sm text-white shadow-lg backdrop-blur">
           Settings saved successfully!
         </div>
       )}
 
-      <div className="flex flex-col gap-6 w-full">
-        {/* Sidebar Navigation */}
-        <div className="w-full flex flex-row justify-center items-center">
-          <div className="bg-gray-800/40 backdrop-blur-md w-full flex flex-row gap-2 sm:gap-5 rounded-xl p-3 sm:p-4 overflow-x-auto">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`flex flex-shrink-0 flex-row items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg whitespace-nowrap transition-all duration-300 ${
-                  activeSection === section.id
-                    ? "bg-red-500/90 text-white"
-                    : "text-gray-400 hover:bg-gray-700/50 hover:text-white"
-                }`}
-              >
-                <section.icon size={18} />
-                <span className="text-sm sm:text-base">{section.name}</span>
-              </button>
-            ))}
-          </div>
+      <PanelCard className="mb-6 overflow-x-auto p-3 sm:p-4">
+        <div className="flex flex-row gap-2">
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              type="button"
+              onClick={() => setActiveSection(section.id)}
+              className={`flex flex-shrink-0 flex-row items-center gap-2 rounded-xl px-3 py-2.5 text-sm whitespace-nowrap transition sm:gap-3 sm:px-4 sm:py-3 ${
+                activeSection === section.id
+                  ? "bg-red-500/20 text-red-400 ring-1 ring-red-500/40"
+                  : "text-gray-400 hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              <section.icon size={18} />
+              <span>{section.name}</span>
+            </button>
+          ))}
         </div>
+      </PanelCard>
 
-        {/* Settings Content */}
-        <div className="flex-1">
-          <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6">
-            {/* Profile Section */}
-            <Profile
-              activeSection={activeSection}
-              settings={settings}
-              handleSettingChange={handleSettingChange}
-            />
+      <PanelCard className="p-5 sm:p-6">
+        <Profile
+          activeSection={activeSection}
+          settings={settings}
+          handleSettingChange={handleSettingChange}
+        />
+        <Privacy
+          activeSection={activeSection}
+          settings={settings}
+          handleSettingChange={handleSettingChange}
+        />
+        <Notifications
+          activeSection={activeSection}
+          settings={settings}
+          handleSettingChange={handleSettingChange}
+        />
+        <Appearance
+          activeSection={activeSection}
+          settings={settings}
+          handleSettingChange={handleSettingChange}
+        />
+        <LanguageAndRegion
+          activeSection={activeSection}
+          settings={settings}
+          handleSettingChange={handleSettingChange}
+        />
+        <Security
+          activeSection={activeSection}
+          settings={settings}
+          handleSettingChange={handleSettingChange}
+        />
+        <Playback
+          activeSection={activeSection}
+          settings={settings}
+          handleSettingChange={handleSettingChange}
+        />
+      </PanelCard>
 
-            {/* Privacy Section */}
-
-            <Privacy
-              activeSection={activeSection}
-              settings={settings}
-              handleSettingChange={handleSettingChange}
-            />
-
-            {/* Notifications Section */}
-            <Notifications
-              activeSection={activeSection}
-              settings={settings}
-              handleSettingChange={handleSettingChange}
-            />
-
-            {/* Appearance Section */}
-            <Appearance
-              activeSection={activeSection}
-              settings={settings}
-              handleSettingChange={handleSettingChange}
-            />
-
-            {/* Language & Region Section */}
-
-            <LanguageAndRegion
-              activeSection={activeSection}
-              settings={settings}
-              handleSettingChange={handleSettingChange}
-            />
-
-            {/* Security Section */}
-            <Security
-              activeSection={activeSection}
-              settings={settings}
-              handleSettingChange={handleSettingChange}
-            />
-
-            {/* Playback Section */}
-            <Playback
-              activeSection={activeSection}
-              settings={settings}
-              handleSettingChange={handleSettingChange}
-            />
-          </div>
-
-          {/* Data & Storage Section  */}
-          <DataAndStorage />
-          
-        </div>
+      <div className="mt-6">
+        <DataAndStorage />
       </div>
-    </div>
+    </PanelShell>
   );
 };
 

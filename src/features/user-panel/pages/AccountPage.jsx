@@ -1,5 +1,14 @@
 import { useState } from "react";
 import { FiEdit, FiSave, FiX } from "react-icons/fi";
+import {
+  PanelShell,
+  PanelHeader,
+  PanelCard,
+  panelInputClass,
+  panelBtnPrimaryClass,
+  panelBtnSecondaryClass,
+  panelBtnDangerClass,
+} from "@/features/user-panel/components/PanelShell";
 
 const buildUserInfo = () => {
   const defaults = {
@@ -34,22 +43,16 @@ const buildUserInfo = () => {
 const Account = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [userInfo, setUserInfo] = useState(buildUserInfo);
-
   const [editedInfo, setEditedInfo] = useState({ ...userInfo });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEditedInfo((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setEditedInfo((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSave = () => {
     setUserInfo(editedInfo);
     setIsEditing(false);
-
-    // Persist the edited info back to localStorage
     try {
       const stored = JSON.parse(localStorage.getItem("user")) || {};
       const updated = {
@@ -63,7 +66,7 @@ const Account = () => {
       localStorage.setItem("username", updated.username);
       localStorage.setItem("userEmail", updated.email);
     } catch {
-      // ignore storage errors
+      // ignore
     }
   };
 
@@ -72,234 +75,137 @@ const Account = () => {
     setIsEditing(false);
   };
 
-  return (
-    <div className="w-full max-w-full overflow-x-clip p-3 sm:p-5  bg-gray-800/40 backdrop-blur-md">
-      {/* Page Header */}
-      <div className="flex flex-wrap justify-between items-center gap-3 mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">Personal Information</h1>
-        {!isEditing ? (
-          <button
-            onClick={() => setIsEditing(true)}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-300"
-          >
-            <FiEdit />
-            <span>Edit Information</span>
-          </button>
-        ) : (
-          <div className="flex gap-3">
-            <button
-              onClick={handleSave}
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-all duration-300"
-            >
-              <FiSave />
-              <span>Save</span>
-            </button>
-            <button
-              onClick={handleCancel}
-              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all duration-300"
-            >
-              <FiX />
-              <span>Cancel</span>
-            </button>
-          </div>
-        )}
-      </div>
+  const fields = [
+    { name: "firstName", label: "First Name", type: "text" },
+    { name: "lastName", label: "Last Name", type: "text" },
+    { name: "email", label: "Email", type: "email" },
+    { name: "phone", label: "Phone Number", type: "tel" },
+    { name: "birthDate", label: "Birth Date", type: "text" },
+    { name: "nationalCode", label: "National Code", type: "text" },
+  ];
 
-      {/* Main Content */}
-      <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-4 sm:p-8">
-        {/* Avatar and Basic Info */}
-        <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 sm:gap-6 mb-8 pb-8 border-b border-gray-700">
+  return (
+    <PanelShell className="overflow-x-clip">
+      <PanelHeader
+        eyebrow="Profile"
+        title="Personal Information"
+        description="Manage your identity details used across Filmzex."
+        actions={
+          !isEditing ? (
+            <button
+              type="button"
+              onClick={() => setIsEditing(true)}
+              className={panelBtnPrimaryClass}
+            >
+              <FiEdit />
+              Edit Information
+            </button>
+          ) : (
+            <>
+              <button type="button" onClick={handleSave} className={panelBtnPrimaryClass}>
+                <FiSave />
+                Save
+              </button>
+              <button type="button" onClick={handleCancel} className={panelBtnDangerClass}>
+                <FiX />
+                Cancel
+              </button>
+            </>
+          )
+        }
+      />
+
+      <PanelCard className="p-4 sm:p-8">
+        <div className="mb-8 flex flex-col items-center gap-4 border-b border-gray-700/60 pb-8 text-center sm:flex-row sm:items-start sm:text-left sm:gap-6">
           <div className="relative shrink-0">
-            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-rose-600">
               <span className="text-3xl font-bold text-white">
-                {userInfo.firstName[0]}
-                {userInfo.lastName[0]}
+                {(userInfo.firstName[0] || "U").toUpperCase()}
+                {(userInfo.lastName[0] || "").toUpperCase()}
               </span>
             </div>
             {isEditing && (
-              <button className="absolute bottom-0 right-0 bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition-all">
-                <FiEdit className="text-white text-sm" />
+              <button
+                type="button"
+                className="absolute bottom-0 right-0 rounded-full bg-red-600 p-2 transition hover:bg-red-500"
+              >
+                <FiEdit className="text-sm text-white" />
               </button>
             )}
           </div>
           <div className="min-w-0 w-full">
-            <h2 className="text-2xl font-bold text-white break-words">
+            <h2 className="break-words text-2xl font-bold text-white">
               {userInfo.firstName} {userInfo.lastName}
             </h2>
-            <p className="text-gray-400 truncate">{userInfo.email}</p>
+            <p className="truncate text-gray-400">{userInfo.email}</p>
           </div>
         </div>
 
-        {/* Information Form */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* First Name */}
-          <div>
-            <label className="block text-gray-300 mb-2 text-sm">
-              First Name
-            </label>
-            {isEditing ? (
-              <input
-                type="text"
-                name="firstName"
-                value={editedInfo.firstName}
-                onChange={handleInputChange}
-                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
-              />
-            ) : (
-              <div className="bg-gray-700/30 rounded-lg px-4 py-3 text-white">
-                {userInfo.firstName}
-              </div>
-            )}
-          </div>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          {fields.map(({ name, label, type }) => (
+            <div key={name}>
+              <label className="mb-1.5 block text-xs text-gray-400">{label}</label>
+              {isEditing ? (
+                <input
+                  type={type}
+                  name={name}
+                  value={editedInfo[name]}
+                  onChange={handleInputChange}
+                  className={panelInputClass}
+                />
+              ) : (
+                <div className="rounded-xl border border-white/5 bg-white/[0.03] px-4 py-3 text-sm text-white truncate">
+                  {userInfo[name] || "—"}
+                </div>
+              )}
+            </div>
+          ))}
 
-          {/* Last Name */}
-          <div>
-            <label className="block text-gray-300 mb-2 text-sm">
-              Last Name
-            </label>
-            {isEditing ? (
-              <input
-                type="text"
-                name="lastName"
-                value={editedInfo.lastName}
-                onChange={handleInputChange}
-                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
-              />
-            ) : (
-              <div className="bg-gray-700/30 rounded-lg px-4 py-3 text-white">
-                {userInfo.lastName}
-              </div>
-            )}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-gray-300 mb-2 text-sm">Email</label>
-            {isEditing ? (
-              <input
-                type="email"
-                name="email"
-                value={editedInfo.email}
-                onChange={handleInputChange}
-                className="w-full bg-gray-700/50 border border-gray-600 truncate rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
-              />
-            ) : (
-              <div className="bg-gray-700/30 rounded-lg px-4 py-3 text-white truncate">
-                {userInfo.email}
-              </div>
-            )}
-          </div>
-
-          {/* Phone */}
-          <div>
-            <label className="block text-gray-300 mb-2 text-sm">
-              Phone Number
-            </label>
-            {isEditing ? (
-              <input
-                type="tel"
-                name="phone"
-                value={editedInfo.phone}
-                onChange={handleInputChange}
-                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
-              />
-            ) : (
-              <div className="bg-gray-700/30 rounded-lg px-4 py-3 text-white">
-                {userInfo.phone}
-              </div>
-            )}
-          </div>
-
-          {/* Birth Date */}
-          <div>
-            <label className="block text-gray-300 mb-2 text-sm">
-              Birth Date
-            </label>
-            {isEditing ? (
-              <input
-                type="text"
-                name="birthDate"
-                value={editedInfo.birthDate}
-                onChange={handleInputChange}
-                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
-              />
-            ) : (
-              <div className="bg-gray-700/30 rounded-lg px-4 py-3 text-white">
-                {userInfo.birthDate}
-              </div>
-            )}
-          </div>
-
-          {/* National Code */}
-          <div>
-            <label className="block text-gray-300 mb-2 text-sm">
-              National Code
-            </label>
-            {isEditing ? (
-              <input
-                type="text"
-                name="nationalCode"
-                value={editedInfo.nationalCode}
-                onChange={handleInputChange}
-                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
-              />
-            ) : (
-              <div className="bg-gray-700/30 rounded-lg px-4 py-3 text-white">
-                {userInfo.nationalCode}
-              </div>
-            )}
-          </div>
-
-          {/* Address - Full Width */}
           <div className="md:col-span-2">
-            <label className="block text-gray-300 mb-2 text-sm">Address</label>
+            <label className="mb-1.5 block text-xs text-gray-400">Address</label>
             {isEditing ? (
               <textarea
                 name="address"
                 value={editedInfo.address}
                 onChange={handleInputChange}
                 rows="3"
-                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
+                className={panelInputClass}
               />
             ) : (
-              <div className="bg-gray-700/30 rounded-lg px-4 py-3 text-white">
-                {userInfo.address}
+              <div className="rounded-xl border border-white/5 bg-white/[0.03] px-4 py-3 text-sm text-white">
+                {userInfo.address || "—"}
               </div>
             )}
           </div>
 
-          {/* Bio - Full Width */}
           <div className="md:col-span-2">
-            <label className="block text-gray-300 mb-2 text-sm">About Me</label>
+            <label className="mb-1.5 block text-xs text-gray-400">About Me</label>
             {isEditing ? (
               <textarea
                 name="bio"
                 value={editedInfo.bio}
                 onChange={handleInputChange}
                 rows="4"
-                className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-all"
+                className={panelInputClass}
               />
             ) : (
-              <div className="bg-gray-700/30 rounded-lg px-4 py-3 text-white">
+              <div className="rounded-xl border border-white/5 bg-white/[0.03] px-4 py-3 text-sm text-white">
                 {userInfo.bio || "No description added yet"}
               </div>
             )}
           </div>
         </div>
 
-        {/* Change Password Section */}
         {!isEditing && (
-          <div className="mt-8 pt-8 border-t border-gray-700">
-            <h3 className="text-xl font-semibold text-white mb-4">
-              Change Password
-            </h3>
-            <button className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-all">
+          <div className="mt-8 border-t border-gray-700/60 pt-8">
+            <h3 className="mb-4 text-lg font-semibold text-white">Change Password</h3>
+            <button type="button" className={panelBtnSecondaryClass}>
               Change Password
             </button>
           </div>
         )}
-      </div>
-    </div>
+      </PanelCard>
+    </PanelShell>
   );
 };
 

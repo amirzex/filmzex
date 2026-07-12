@@ -31,7 +31,7 @@ const LeftSide = () => {
     },
     { id: 2, title: "Account", icon: User, path: "/userpanel/account" },
     { id: 3, title: "Favorite", icon: Heart, path: "/userpanel/favorite" },
-    { id: 4, title: "Buy", icon: ShoppingBag, path: "/userpanel/buy" },
+    { id: 4, title: "Subscription", icon: ShoppingBag, path: "/userpanel/buy" },
     { id: 5, title: "Setting", icon: Settings, path: "/userpanel/setting" },
     { id: 6, title: "Security", icon: Shield, path: "/userpanel/security" },
     { id: 7, title: "Home", icon: Home, path: "/" },
@@ -57,22 +57,22 @@ const LeftSide = () => {
   };
 
   return (
-    <div className="bg-gray-800/40 backdrop-blur-md flex flex-col lg:justify-between w-full lg:w-[260px] p-4 lg:p-5 gap-4 lg:h-screen lg:sticky lg:top-0 rounded-xl lg:rounded-none border-b lg:border-b-0 lg:border-r border-gray-700">
-      {/* User Profile */}
-      <div className="flex items-center gap-3 pb-4 border-b border-gray-700">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-purple-600 flex items-center justify-center text-white font-bold">
+    <div className="relative flex w-full flex-col gap-4 overflow-hidden rounded-xl border border-gray-700/60 bg-gradient-to-b from-gray-900 via-gray-900 to-black p-4 lg:sticky lg:top-0 lg:h-screen lg:w-[260px] lg:justify-between lg:rounded-xl lg:p-5">
+      <div className="pointer-events-none absolute -top-16 left-0 h-40 w-40 rounded-full bg-red-600/15 blur-3xl" />
+
+      <div className="relative flex items-center gap-3 border-b border-gray-700/60 pb-4">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-rose-600 font-bold text-white">
           {getUserInitials()}
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-white font-semibold truncate">
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-semibold text-white">
             {user?.username || "User"}
           </p>
-          <p className="text-gray-400 text-xs truncate">{user?.email || ""}</p>
+          <p className="truncate text-xs text-gray-400">{user?.email || ""}</p>
         </div>
       </div>
 
-      {/* Menu */}
-      <div className="flex flex-row lg:flex-col lg:flex-1 gap-1 overflow-x-auto lg:overflow-visible">
+      <div className="relative flex flex-row gap-1 overflow-x-auto lg:flex-1 lg:flex-col lg:overflow-visible">
         {menuItems?.map((item) => {
           const Icon = item.icon;
           return (
@@ -80,26 +80,26 @@ const LeftSide = () => {
               key={item.id}
               to={item.path}
               className={({ isActive }) =>
-                `flex flex-shrink-0 items-center gap-3 p-3 rounded-xl mb-0 lg:mb-1 whitespace-nowrap transition-all duration-300 ${
+                `mb-0 flex flex-shrink-0 items-center gap-3 whitespace-nowrap rounded-xl p-3 transition-all duration-300 lg:mb-1 ${
                   isActive
-                    ? "bg-red-500/20 text-red-400"
-                    : "text-gray-300 hover:bg-gray-700/50 hover:text-white"
+                    ? "bg-red-500/20 text-red-400 ring-1 ring-red-500/30"
+                    : "text-gray-300 hover:bg-white/5 hover:text-white"
                 }`
               }
             >
-              <Icon className="w-5 h-5" />
+              <Icon className="h-5 w-5" />
               <span className="text-sm">{item.title}</span>
             </NavLink>
           );
         })}
       </div>
 
-      {/* Logout */}
       <button
+        type="button"
         onClick={handleLogout}
-        className="flex items-center gap-3 px-4 py-3 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-all duration-300 border border-red-500/20"
+        className="relative flex items-center gap-3 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-red-400 transition-all duration-300 hover:bg-red-500/20 hover:text-red-300"
       >
-        <LogOut className="w-5 h-5" />
+        <LogOut className="h-5 w-5" />
         <span>Logout</span>
       </button>
     </div>
